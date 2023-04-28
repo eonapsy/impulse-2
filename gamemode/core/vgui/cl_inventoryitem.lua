@@ -248,7 +248,7 @@ function PANEL:OnMousePressed(keycode)
 				shouldUse = true
 			end
 		end
-		
+
 		if shouldUse then
 			popup:AddOption(self.Item.UseName or "Use", function()
 				if self.Item.ShouldTraceUse then
@@ -304,17 +304,6 @@ function PANEL:OnMousePressed(keycode)
 					net.SendToServer()
 				end)
 			end
-		end
-	end
-
-	if (self.Item.CustomActions != nil) then
-		for name, func in pairs( self.Item.CustomActions ) do
-			popup:AddOption(name, function()
-				net.Start("impulseInvDoAction")
-				net.WriteUInt(self.InvID, 16)
-				net.WriteString(name)
-				net.SendToServer()
-			end)
 		end
 	end
 
