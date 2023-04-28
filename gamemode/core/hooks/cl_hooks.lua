@@ -172,12 +172,12 @@ function GM:DefineSettings()
 		RunConsoleCommand("r_shadows", v)
 		RunConsoleCommand("r_dynamic", v)
 	end})
-	impulse.DefineSetting("perf_blur", {name="Blur enabled", category="Performance", type="tickbox", default=true})
-	impulse.DefineSetting("inv_sortequippablesattop", {name="Sort equipped at top", category="Inventory", type="tickbox", default=true})
-	impulse.DefineSetting("inv_sortweight", {name="Sort by weight", category="Inventory", type="dropdown", default="Inventory only", options={"Never", "Inventory only", "Containers only", "Always"}})
-	impulse.DefineSetting("misc_vendorgreeting", {name="Vendor greeting sound enabled", category="Misc", type="tickbox", default=true})
-	impulse.DefineSetting("chat_oocenabled", {name="OOC enabled", category="Chatbox", type="tickbox", default=true})
-	impulse.DefineSetting("chat_pmpings", {name="PM and tag sound enabled", category="Chatbox", type="tickbox", default=true})
+	impulse.DefineSetting("perf_blur", {name="Blur enabled", category = "Performance", type = "tickbox", default = true })
+	impulse.DefineSetting("inv_sortequippablesattop", { name = "Sort equipped at top", category = "Inventory", type = "tickbox", default = true })
+	impulse.DefineSetting("inv_sortweight", {name = "Sort by weight", category = "Inventory", type = "dropdown", default = "Inventory only", options = {"Never", "Inventory only", "Containers only", "Always"}})
+	impulse.DefineSetting("misc_vendorgreeting", {name = "Vendor greeting sound enabled", category = "Misc", type = "tickbox", default = true })
+	impulse.DefineSetting("chat_oocenabled", { name = "OOC enabled", category = "Chatbox", type = "tickbox", default = true })
+	impulse.DefineSetting("chat_pmpings", { name = "PM and tag sound enabled", category = "Chatbox", type = "tickbox", default = true })
 end
 
 local loweredAngles = Angle(30, -30, -25)
@@ -202,7 +202,7 @@ function GM:CalcViewModelView(weapon, viewmodel, oldEyePos, oldEyeAng, eyePos, e
 		vm_angles:RotateAroundAxis(vm_angles:Forward(), rot.y * frac)
 		vm_angles:RotateAroundAxis(vm_angles:Right(), rot.r * frac)
 
-		lp.raiseFraction = Lerp(FrameTime() * impulse.Config.RaiseSpeed or 5, lp.raiseFraction or 0, raiseTarg)
+		lp.raiseFraction = Lerp(FrameTime() * (impulse.Config.RaiseSpeed or 5), lp.raiseFraction or 0, raiseTarg)
 	end
 
 	--The original code of the hook.
