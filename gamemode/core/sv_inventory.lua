@@ -620,6 +620,24 @@ function meta:UseInventoryItem(itemid)
 	end
 end
 
+--- Uses an inventory's custom action
+-- @realm seever
+-- @int itemid The Item ID
+-- @str name The item name
+function meta:UseInventoryCA(itemid, name)
+	local itemclass = impulse.Inventory.Data[self.impulseID][1][itemid].class
+	local itemnetid = impulse.Inventory.ClassToNetID(itemclass)
+	local item = impulse.Inventory.Items[itemnetid]
+
+	local func = item.CustomActions[name]
+	if func then
+		local shouldRemove = func(self) or true
+
+		if shouldRemove and self:HasInventoryItemSpecific(itemid) then
+			self:TakeInventoryItem(itemid)
+		end
+	end
+end
 --- Moves a specific inventory item across storages (to move several of the same items use MoveInventoryItemMass as it is faster)
 -- @realm server
 -- @int itemid Item ID

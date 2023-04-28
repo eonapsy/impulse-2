@@ -297,13 +297,24 @@ function PANEL:OnMousePressed(keycode)
 					net.SendToServer()
 				end)
 			else
-				popup:AddOption(self.Item.UnEquipName or "Un-Equip", function()
+				popup:AddOption(self.Item.UnEquipName or "Unequip", function()
 					net.Start("impulseInvDoEquip")
 					net.WriteUInt(self.InvID, 16)
 					net.WriteBool(false)
 					net.SendToServer()
 				end)
 			end
+		end
+	end
+
+	if (self.Item.CustomActions != nil) then
+		for name, func in pairs( self.Item.CustomActions ) do
+			popup:AddOption(name, function()
+				net.Start("impulseInvDoAction")
+				net.WriteUInt(self.InvID, 16)
+				net.WriteString(name)
+				net.SendToServer()
+			end)
 		end
 	end
 
@@ -314,6 +325,8 @@ function PANEL:OnMousePressed(keycode)
 			net.SendToServer()
 		end)
 	end
+
+
 
 	function popup:Think()
 		if not IsValid(self.Inv) then

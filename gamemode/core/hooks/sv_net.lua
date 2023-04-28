@@ -31,6 +31,7 @@ util.AddNetworkString("impulseInvUpdateData")
 util.AddNetworkString("impulseInvDoEquip")
 util.AddNetworkString("impulseInvDoDrop")
 util.AddNetworkString("impulseInvDoUse")
+util.AddNetworkString("impulseInvDoAction")
 util.AddNetworkString("impulseInvDoSearch")
 util.AddNetworkString("impulseInvDoSearchConfiscate")
 util.AddNetworkString("impulseCharacterCreate")
@@ -708,6 +709,28 @@ net.Receive("impulseInvDoUse", function(len, ply)
 
 	if hasItem then
 		ply:UseInventoryItem(invid)
+	end
+end)
+
+net.Receive("impulseInvDoAction", function(len, ply)
+	if not ply.beenInvSetup or (ply.nextAction or 0) > CurTime() then return end
+	ply.nextAction = CurTime() + 0.5
+
+	if not ply:Alive() or ply:GetSyncVar(SYNC_ARRESTED, false) then
+		return
+	end
+
+	local canUse = hook.Run("CanUseInventory", ply)
+
+	if canUse != nil and canUse == false then
+		return
+	end
+	local invID = net.ReadUInt(16)
+	local hasItem, item = ply:HasInventoryItemSpecific(invID)
+
+	local action = net.ReadString()
+	if (hasItem) then
+		ply:UseInventoryCA(invID, action)
 	end
 end)
 
