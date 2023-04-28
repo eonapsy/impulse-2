@@ -65,12 +65,12 @@ function impulse.chatBox.buildBox()
 			gui.HideGameUI()
 
 		elseif code == KEY_TAB then
-			
+
 			impulse.chatBox.TypeSelector = (impulse.chatBox.TypeSelector and impulse.chatBox.TypeSelector + 1) or 1
-			
+
 			if impulse.chatBox.TypeSelector > 2 then impulse.chatBox.TypeSelector = 1 end
 			if impulse.chatBox.TypeSelector < 1 then impulse.chatBox.TypeSelector = 2 end
-			
+
 			impulse.chatBox.ChatType = types[impulse.chatBox.TypeSelector]
 
 			timer.Simple(0.001, function() impulse.chatBox.entry:RequestFocus() end)
@@ -82,7 +82,7 @@ function impulse.chatBox.buildBox()
 			end
 		elseif code == KEY_ENTER then
 			-- Replicate the client pressing enter
-			
+
 			if string.Trim(self:GetText()) != "" then
 				if impulse.chatBox.ChatType == types[2] then
 					net.Start("impulseChatMessage")
@@ -142,16 +142,10 @@ function impulse.chatBox.buildBox()
 					local limit = LocalPlayer().OOCLimit
 
 					if not limit then
-						if LocalPlayer():IsDonator() then
-							LocalPlayer().OOCLimit = impulse.Config.OOCLimitVIP
-						else
-							LocalPlayer().OOCLimit = impulse.Config.OOCLimit
-						end
+						LocalPlayer().OOCLimit = LocalPlayer():IsDonator() and impulse.Config.OOCLimitVIP or impulse.Config.OOCLimit
 					end
 
-
-
-					draw.DrawText("(you have "..LocalPlayer().OOCLimit.." OOC messages left)", "Impulse-Elements18-Shadow", 5, h - 24)
+					draw.DrawText("(you have " .. LocalPlayer().OOCLimit .. " OOC messages left)", "Impulse-Elements18-Shadow", 5, h - 24)
 					self:GetParent().TypingInOOC = true
 				else
 					self:GetParent().TypingInOOC = false
@@ -163,17 +157,17 @@ function impulse.chatBox.buildBox()
 				local isLeadAdmin = LocalPlayer():IsLeadAdmin()
 				local isSuperAdmin = LocalPlayer():IsSuperAdmin()
 
- 				for k, v in pairs(impulse.chatCommands) do
- 					if (strFind(k, command)) then
- 						local c = impulse.Config.MainColour
- 						
- 						if v.adminOnly then
- 							if isAdmin then
- 								c = impulse.Config.InteractColour
- 							else
- 								continue 
- 							end
- 						end
+				for k, v in pairs(impulse.chatCommands) do
+					if (strFind(k, command)) then
+						local c = impulse.Config.MainColour
+	
+						if v.adminOnly then
+							if isAdmin then
+								c = impulse.Config.InteractColour
+							else
+								continue 
+							end
+						end
 
    						if v.leadAdminOnly then
  							if isLeadAdmin or isSuperAdmin then
@@ -186,9 +180,9 @@ function impulse.chatBox.buildBox()
   						if v.superAdminOnly then
  							if isSuperAdmin then
  								c = Color(255, 0, 0, 255)
- 							else
- 								continue 
- 							end
+							else
+								continue 
+							end
  						end
  
 						draw.DrawText(k.." - "..v.description, "Impulse-ChatMedium", 10, 10 + i, c, TEXT_ALIGN_LEFT)
@@ -371,7 +365,7 @@ hook.Add("HUDShouldDraw", "impulse.chatBox_hidedefault", function( name )
 	end
 end)
 
- --// Modify the Chatbox for align.
+--// Modify the Chatbox for align.
 local oldGetChatBoxPos = chat.GetChatBoxPos
 function chat.GetChatBoxPos()
 	return impulse.chatBox.frame:GetPos()
@@ -383,7 +377,7 @@ end
 
 chat.Open = impulse.chatBox.showBox
 function chat.Close(...)
-	if IsValid( impulse.chatBox.frame ) then 
+	if IsValid( impulse.chatBox.frame ) then
 		impulse.chatBox.hideBox(...)
 	else
 		impulse.chatBox.buildBox()

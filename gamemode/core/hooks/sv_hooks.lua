@@ -776,13 +776,13 @@ end
 
 function GM:KeyPress(ply, key)
 	if ply:IsAFK() then
-		ply:UnMakeAFK()	
+		ply:UnMakeAFK()
 	end
 
 	ply.AFKTimer = CurTime() + impulse.Config.AFKTime
 
 	if key == IN_RELOAD then
-		timer.Create("impulseRaiseWait"..ply:SteamID(), 1, 1, function()
+		timer.Create("impulseRaiseWait" .. ply:SteamID(), 1, 1, function()
 			if IsValid(ply) then
 				ply:ToggleWeaponRaised()
 			end

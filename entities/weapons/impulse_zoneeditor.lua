@@ -16,16 +16,16 @@ SWEP.ViewModel = "models/weapons/v_pistol.mdl"
 SWEP.WorldModel = "models/weapons/w_pistol.mdl"
 
 SWEP.Primary.Delay			= 1
-SWEP.Primary.Recoil			= 0	
+SWEP.Primary.Recoil			= 0
 SWEP.Primary.Damage			= 0
 SWEP.Primary.NumShots		= 0
-SWEP.Primary.Cone			= 0 	
-SWEP.Primary.ClipSize		= -1	
-SWEP.Primary.DefaultClip	= -1	
-SWEP.Primary.Automatic   	= false	
+SWEP.Primary.Cone			= 0
+SWEP.Primary.ClipSize		= -1
+SWEP.Primary.DefaultClip	= -1
+SWEP.Primary.Automatic   	= false
 SWEP.Primary.Ammo         	= "none"
 SWEP.IsAlwaysRaised = true
- 
+
 SWEP.Secondary.Delay		= 0.9
 SWEP.Secondary.Recoil		= 0
 SWEP.Secondary.Damage		= 0
@@ -48,13 +48,13 @@ if SERVER then
 
 	function SWEP:Reload()
 	end
-	
+
 	function SWEP:SecondaryAttack()
 	end
 else
 	function SWEP:PrimaryAttack()
 		if self.NextGo > CurTime() then return end
-		
+
 		if not self.Pos1 then
 			self.Pos1 = self.Owner:GetPos()
 			self.State = "First position registered, awaiting second position."
@@ -80,7 +80,7 @@ else
 		self.Exporting = nil
 
 		surface.PlaySound("buttons/button10.wav")
-		
+
 		self.NextGo = CurTime() + .3
 	end
 
@@ -88,10 +88,10 @@ else
 		if self.Pos1 and self.Pos2 and not self.Exporting then
 			self.Exporting = true
 			Derma_StringRequest("impulse", "Enter zone name (must be unique):", nil, function(name)
-				local pos1 = "Vector("..self.Pos1.x..", "..self.Pos1.y..", "..self.Pos1.z..")"
-				local pos2 = "Vector("..self.Pos2.x..", "..self.Pos2.y..", "..self.Pos2.z..")"
-				local output = '{name = "'..name..'", pos1 = '..pos1..', pos2 = '..pos2..'}'
-				
+				local pos1 = "Vector( " .. self.Pos1.x .. ", " .. self.Pos1.y .. ", " .. self.Pos1.z .. " )"
+				local pos2 = "Vector(" .. self.Pos2.x..", " .. self.Pos2.y .. ", " .. self.Pos2.z .. ")"
+				local output = "{ name = \"" .. name .. "\", pos1 = " .. pos1 .. ", pos2 = " .. pos2 .. " }"
+
 				chat.AddText("-----------------OUTPUT-----------------")
 				chat.AddText(output)
 				chat.AddText("Output copied to clipboard.")

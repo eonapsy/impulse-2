@@ -545,7 +545,7 @@ do
 
 	if SERVER then
 		util.AddNetworkString("impulseSeqSet")
-		
+
 		function meta:SetWeaponRaised(state)
 			self:SetSyncVar(SYNC_WEPRAISED, state, true)
 
@@ -562,7 +562,7 @@ do
 		end
 
 		function meta:ToggleWeaponRaised()
-			self:SetWeaponRaised(!self:IsWeaponRaised())
+			self:SetWeaponRaised(not self:IsWeaponRaised())
 		end
 	end
 

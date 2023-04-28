@@ -202,7 +202,7 @@ function GM:CalcViewModelView(weapon, viewmodel, oldEyePos, oldEyeAng, eyePos, e
 		vm_angles:RotateAroundAxis(vm_angles:Forward(), rot.y * frac)
 		vm_angles:RotateAroundAxis(vm_angles:Right(), rot.r * frac)
 
-		lp.raiseFraction = Lerp(FrameTime() * 2, lp.raiseFraction or 0, raiseTarg)
+		lp.raiseFraction = Lerp(FrameTime() * impulse.Config.RaiseSpeed or 5, lp.raiseFraction or 0, raiseTarg)
 	end
 
 	--The original code of the hook.
