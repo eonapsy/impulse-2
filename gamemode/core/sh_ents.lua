@@ -25,7 +25,7 @@ function entityMeta:IsPropDoor()
 	if not IsValid(self) then
 		return
 	end
-	
+
 	if not self.GetModel or not propDoors[self:GetModel()] then
 		return false
 	end
@@ -53,7 +53,7 @@ end
 -- @realm shared
 -- @treturn bool Is button
 function entityMeta:IsButton()
-	return (self:GetClass():find("button") or self:GetClass() == ("class C_BaseEntity"))
+	return self:GetClass():find("button") or self:GetClass() == "class C_BaseEntity"
 end
 
 --- Returns if a door is locked
@@ -117,7 +117,7 @@ function entityMeta:EmitQueuedSounds(sounds, delay, spacing, volume, pitch)
 			v = v[1]
 		end
 
-		local length = SoundDuration(ADJUST_SOUND..v)
+		local length = SoundDuration(ADJUST_SOUND .. v)
 		delay = delay + preSet
 
 		timer.Simple(delay, function()
@@ -143,10 +143,10 @@ if SERVER then
 	-- @int[opt=1] volume Volume of the sound
 	-- @int[opt=100] pitch Pitch of the sound
 	function entityMeta:EmitBudgetSound(sound, range, level, pitch)
-		local range = range or 600
+		range = range or 600
 		local pos = self:GetPos()
 		local entIndex = self:EntIndex()
-		local range = range ^ 2
+		range = range ^ 2
 
 		local recipFilter = RecipientFilter()
 

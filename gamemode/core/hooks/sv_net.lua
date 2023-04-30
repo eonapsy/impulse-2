@@ -224,7 +224,7 @@ net.Receive("impulseATMWithdraw", function(len, ply)
 	if ply:CanAffordBank(amount) then
 		ply:TakeBankMoney(amount)
 		ply:GiveMoney(amount)
-		ply:Notify("You have withdrawn "..impulse.Config.CurrencyPrefix..amount.." from your bank account.")
+		ply:Notify("You have withdrawn " .. hook.Run("impulseCurrencyString", amount) .. " from your bank account.")
 	else
 		ply:Notify("You cannot afford to withdraw this amount of money.")
 	end
@@ -243,7 +243,7 @@ net.Receive("impulseATMDeposit", function(len, ply)
 	if ply:CanAfford(amount) then
 		ply:TakeMoney(amount)
 		ply:GiveBankMoney(amount)
-		ply:Notify("You have deposited "..impulse.Config.CurrencyPrefix..amount.." to your bank account.")
+		ply:Notify("You have deposited " .. hook.Run("impulseCurrencyString", price) .. " to your bank account.")
 	else
 		ply:Notify("You cannot afford to deposit this amount of money.")
 	end
@@ -384,7 +384,7 @@ net.Receive("impulseBuyItem", function(len, ply)
 			table.insert(ply.BusinessSpawnCount, ent)
 		end
 
-		ply:Notify("You have purchased "..buyableName.." for "..impulse.Config.CurrencyPrefix..buyable.price..".")
+		ply:Notify("You have purchased " .. buyableName .. " for " .. hook.Run("impulseCurrencyString", buyable.price) .. ".")
 
 		hook.Run("PlayerBuyablePurchase", ply, buyableName)
 	else
@@ -423,7 +423,7 @@ net.Receive("impulseDoorBuy", function(len, ply)
 			ply:TakeMoney(impulse.Config.DoorPrice)
 			ply:SetDoorMaster(traceEnt)
 
-			ply:Notify("You have bought a door for "..impulse.Config.CurrencyPrefix..impulse.Config.DoorPrice..".")
+			ply:Notify("You have bought a door for " .. hook.Run("impulseCurrencyString", impulse.Config.DoorPrice) .. ".")
 
 			hook.Run("PlayerPurchaseDoor", ply, traceEnt)
 		else
@@ -448,7 +448,7 @@ net.Receive("impulseDoorSell", function(len, ply)
 		ply:RemoveDoorMaster(traceEnt)
 		ply:GiveMoney(impulse.Config.DoorPrice - 2)
 
-		ply:Notify("You have sold a door for "..impulse.Config.CurrencyPrefix..(impulse.Config.DoorPrice - 2)..".")
+		ply:Notify("You have sold a door for " .. hook.Run("impulseCurrencyString", impulse.Config.DoorPrice - 2) .. ".")
 
 		hook.Run("PlayerSellDoor", ply, traceEnt)
 	end
@@ -543,7 +543,7 @@ net.Receive("impulseDoorAdd", function(len, ply)
 		ply:TakeMoney(cost)
 		target:SetDoorUser(traceEnt)
 
-		ply:Notify("You have added "..target:Nick().." to this door for "..impulse.Config.CurrencyPrefix..cost..".")
+		ply:Notify("You have added " .. target:Nick() .. " to this door for " .. hook.Run("impulseCurrencyString", cost) .. ".")
 
 		hook.Run("PlayerAddUserToDoor", ply, owners)
 	end
@@ -637,7 +637,7 @@ net.Receive("impulseSellAllDoors", function(len, ply)
 
 	local amount = sold * (impulse.Config.DoorPrice - 2)
 	ply:GiveMoney(amount)
-	ply:Notify("You have sold all your doors for "..impulse.Config.CurrencyPrefix..amount..".")
+	ply:Notify("You have sold all your doors for " .. hook.Run("impulseCurrencyString", amount) .. ".")
 end)
 
 net.Receive("impulseInvDoEquip", function(len, ply)
@@ -962,9 +962,9 @@ net.Receive("impulseChangeRPName", function(len, ply)
 			hook.Run("PlayerChangeRPName", ply, output)
 
 			ply.nextRPNameChange = CurTime() + 240
-			ply:Notify("You have changed your name to "..output.." for "..impulse.Config.CurrencyPrefix..impulse.Config.RPNameChangePrice..".")
+			ply:Notify("You have changed your name to " .. output .. " for " .. hook.Run("impulseCurrencyString", impulse.Config.RPNameChangePrice) .. ".")
 		else
-			ply:Notify("Name rejected: "..output)
+			ply:Notify("Name rejected: " .. output)
 		end
 	else
 		ply:Notify("You cannot afford to change your name.")
@@ -1045,7 +1045,7 @@ net.Receive("impulseCharacterEdit", function(len, ply)
 		end
 
 		ply:TakeMoney(cost)
-		ply:Notify("You have changed your appearance for "..impulse.Config.CurrencyPrefix..cost..".")
+		ply:Notify("You have changed your appearance for " .. hook.Run("impulseCurrencyString", cost) .. ".")
 	else
 		ply:Notify("You cannot afford to change your appearance.")
 	end
@@ -1330,9 +1330,9 @@ net.Receive("impulseVendorBuy", function(len, ply)
 
 	if sellData.Cost then
 		ply:TakeMoney(sellData.Cost)
-		ply:Notify("You have purchased "..item.Name.." for "..impulse.Config.CurrencyPrefix..sellData.Cost..".")
+		ply:Notify("You have purchased " .. item.Name .. " for " .. hook.Run("impulseCurrencyString", sellData.Cost) .. ".")
 	else
-		ply:Notify("You have acquired a "..item.Name..".")
+		ply:Notify("You have acquired a " .. item.Name .. ".")
 	end
 	
 	ply:GiveInventoryItem(itemclass, 1, sellData.Restricted or false)
@@ -1408,9 +1408,9 @@ net.Receive("impulseVendorSell", function(len, ply)
 
 	if buyData.Cost then
 		ply:GiveMoney(buyData.Cost)
-		ply:Notify("You have sold a "..itemName.." for "..impulse.Config.CurrencyPrefix..buyData.Cost..".")
+		ply:Notify("You have sold a " .. itemName .. " for " .. hook.Run("impulseCurrencyString", buyData.Cost) .. ".")
 	else
-		ply:Notify("You have handed over a "..itemName..".")
+		ply:Notify("You have handed over a " .. itemName .. ".")
 	end
 
 	hook.Run("PlayerVendorSell", ply, vendor, itemclass, buyData.Cost or "free")

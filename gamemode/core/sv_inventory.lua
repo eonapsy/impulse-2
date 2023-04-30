@@ -88,7 +88,7 @@ end
 function impulse.Inventory.SpawnItem(class, pos, banned, killtime)
 	local itemid = impulse.Inventory.ClassToNetID(class)
 	if not itemid then return print("[impulse] Attempting to spawn nil item!") end
-	
+
 	local item = ents.Create("impulse_item")
 	item:SetItem(itemid)
 	item:SetPos(pos)
@@ -100,7 +100,7 @@ function impulse.Inventory.SpawnItem(class, pos, banned, killtime)
 	if killtime then
 		item.RemoveIn = CurTime() + killtime
 	end
-	
+
 	item:Spawn()
 
 	return item
@@ -214,7 +214,7 @@ end
 -- @treturn bool Has item
 function meta:HasInventoryItemSpecific(id, storetype)
 	if not self.beenInvSetup then return false end
-	local storetype = storetype or 1
+	storetype = storetype or 1
 	local has = impulse.Inventory.Data[self.impulseID][storetype][id]
 
 	if has then
@@ -231,7 +231,7 @@ end
 -- @treturn int Item ID of illegal item
 function meta:HasIllegalInventoryItem(storetype)
 	if not self.beenInvSetup then return false end
-	local storetype = storetype or 1
+	storetype = storetype or 1
 	local inv = self:GetInventory(storetype)
 
 	for v,k in pairs(inv) do
@@ -253,7 +253,7 @@ end
 -- @treturn bool Is restricted
 function meta:IsInventoryItemRestricted(id, storetype)
 	if not self.beenInvSetup then return false end
-	local storetype = storetype or 1
+	storetype = storetype or 1
 	local has = impulse.Inventory.Data[self.impulseID][storetype][id]
 
 	if has then
@@ -275,16 +275,16 @@ end
 function meta:GiveInventoryItem(itemclass, storetype, restricted, isLoaded, moving, clip) -- isLoaded is a internal arg used for first time item setup, when they are already half loaded
 	if not self.beenInvSetup and not isLoaded then return end
 
-	local storetype = storetype or 1
-	local restricted = restricted or false
+	storetype = storetype or 1
+	restricted = restricted or false
 	local itemid = impulse.Inventory.ClassToNetID(itemclass)
 	local weight = impulse.Inventory.Items[itemid].Weight or 0
 	local impulseid = self.impulseID
 
 	local inv = impulse.Inventory.Data[impulseid][storetype]
-	local invid 
+	local invid
 
-	for i=1, (table.Count(inv) + 1) do -- intellegent table insert looks for left over ids to reuse to stop massive id's that cant be networked
+	for i = 1, (table.Count(inv) + 1) do -- intellegent table insert looks for left over ids to reuse to stop massive id's that cant be networked
 		if inv[i] == nil then
 			invid = i
 			impulse.Inventory.Data[impulseid][storetype][i] = {
@@ -301,7 +301,7 @@ function meta:GiveInventoryItem(itemclass, storetype, restricted, isLoaded, movi
 	if not restricted and not isLoaded and not moving then
 		impulse.Inventory.DBAddItem(impulseid, itemclass, storetype)
 	end
-	
+
 	if storetype == 1 then
 		self.InventoryWeight = self.InventoryWeight + weight
 		self.InventoryRegister[itemclass] = (self.InventoryRegister[itemclass] or 0) + 1 -- use a register that copies the actions of the real inv for search efficiency
@@ -331,7 +331,7 @@ end
 function meta:TakeInventoryItem(invid, storetype, moving)
 	if not self.beenInvSetup then return end
 
-	local storetype = storetype or 1
+	storetype = storetype or 1
 	local amount = amount or 1
 	local impulseid = self.impulseID
 	local item = impulse.Inventory.Data[impulseid][storetype][invid]
@@ -372,7 +372,7 @@ function meta:TakeInventoryItem(invid, storetype, moving)
 
 	hook.Run("OnInventoryItemRemoved", self, storetype, item.class, item.id, item.equipped, item.restricted, invid)
 	impulse.Inventory.Data[impulseid][storetype][invid] = nil
-	
+
 	if not moving then
 		net.Start("impulseInvRemove")
 		net.WriteUInt(invid, 16)
@@ -388,7 +388,7 @@ end
 -- @int[opt=1] storageType Storage type (1 is player inventory, 2 is storage)
 function meta:ClearInventory(storetype)
 	if not self.beenInvSetup then return end
-	local storetype = storetype or 1
+	storetype = storetype or 1
 
 	local inv = self:GetInventory(storetype)
 
@@ -408,7 +408,7 @@ end
 -- @int[opt=1] storageType Storage type (1 is player inventory, 2 is storage)
 function meta:ClearRestrictedInventory(storetype)
 	if not self.beenInvSetup then return end
-	local storetype = storetype or 1
+	storetype = storetype or 1
 
 	local inv = self:GetInventory(storetype)
 
@@ -428,7 +428,7 @@ end
 -- @int[opt=1] storageType Storage type (1 is player inventory, 2 is storage)
 function meta:ClearIllegalInventory(storetype)
 	if not self.beenInvSetup then return end
-	local storetype = storetype or 1
+	storetype = storetype or 1
 
 	local inv = self:GetInventory(storetype)
 
@@ -449,8 +449,8 @@ end
 function meta:TakeInventoryItemClass(itemclass, storetype, amount)
 	if not self.beenInvSetup then return end
 
-	local storetype = storetype or 1
-	local amount = amount or 1
+	storetype = storetype or 1
+	amount = amount or 1
 	local impulseid = self.impulseID
 
 	local count = 0
@@ -476,7 +476,7 @@ function meta:SetInventoryItemEquipped(itemid, state)
 	if not item then
 		return
 	end
-	
+
 	local id = impulse.Inventory.ClassToNetID(item.class)
 	local onEquip = impulse.Inventory.Items[id].OnEquip
 	local unEquip = impulse.Inventory.Items[id].UnEquip
@@ -498,7 +498,7 @@ function meta:SetInventoryItemEquipped(itemid, state)
 		local equippedItem = self.InventoryEquipGroups[itemclass.EquipGroup]
 		if equippedItem and equippedItem != itemid then
 			self:SetInventoryItemEquipped(equippedItem, false)
-		end 
+		end
 	end
 
 	if state then
@@ -552,11 +552,7 @@ function meta:DropInventoryItem(itemid)
 	local itemnetid = impulse.Inventory.ClassToNetID(item.class)
 	local itemclass = impulse.Inventory.Items[itemnetid]
 
-	if item.restricted then
-		if not itemclass.DropIfRestricted then
-			return
-		end
-	end
+	if item.restricted and not itemclass.DropIfRestricted then return end
 
 	self:TakeInventoryItem(itemid)
 
@@ -633,7 +629,7 @@ function meta:MoveInventoryItem(itemid, from, to)
 	local itemclip = self:TakeInventoryItem(itemid, from, true)
 
 	impulse.Inventory.DBUpdateStoreType(self.impulseID, itemclass, 1, from, to)
-	local newinvid = self:GiveInventoryItem(itemclass, to, false, nil, true, (itemclip or nil))
+	local newinvid = self:GiveInventoryItem(itemclass, to, false, nil, true, itemclip or nil)
 
 	net.Start("impulseInvMove")
 	net.WriteUInt(itemid, 16)
@@ -658,7 +654,7 @@ function meta:MoveInventoryItemMass(itemclass, from, to, amount)
 			takes = takes + 1
 
 			local itemclip = self:TakeInventoryItem(v, from, true)
-			local newinvid = self:GiveInventoryItem(itemclass, to, false, nil, true, (itemclip or nil))
+			local newinvid = self:GiveInventoryItem(itemclass, to, false, nil, true, itemclip or nil)
 
 			net.Start("impulseInvMove")
 			net.WriteUInt(v, 16)

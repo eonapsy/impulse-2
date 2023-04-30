@@ -39,7 +39,7 @@ local blacklistNames = {
 
 function impulse.CanUseName(name)
 	if name:len() >= 24 then
-		return false, "Name too long. (max. 24)" 
+		return false, "Name too long. (max. 24)"
 	end
 
 	name = name:Trim()
@@ -59,9 +59,9 @@ function impulse.CanUseName(name)
 	if numFound then
 		return false, "Name contains numbers."
 	end
-	
+
 	if blacklistNames[name:lower()] then
-		return false, "Blacklisted/reserved name."	
+		return false, "Blacklisted/reserved name."
 	end
 
 	return true, name
@@ -73,7 +73,7 @@ function meta:SteamName()
 end
 
 function meta:Name()
-    return self:GetSyncVar(SYNC_RPNAME, self:SteamName())
+	return self:GetSyncVar(SYNC_RPNAME, self:SteamName())
 end
 
 function meta:KnownName()

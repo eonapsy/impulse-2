@@ -22,7 +22,7 @@ function entMeta:Sync(target)
 		if target and syncCondition and not syncCondition(target) then
 			return
 		end
-		
+
 		if syncRealm == SYNC_TYPE_PUBLIC then
 			if target then
 				if value == nil then
@@ -159,7 +159,7 @@ function entMeta:SyncRemove()
 
 	net.Start("iSyncR")
 		net.WriteUInt(targetID, 16)
-	net.Broadcast()	
+	net.Broadcast()
 end
 
 
@@ -174,7 +174,7 @@ function entMeta:SyncRemoveVar(varID)
 	net.Start("iSyncRvar")
 		net.WriteUInt(targetID, 16)
 		net.WriteUInt(varID, SYNC_ID_BITS)
-	net.Broadcast()	
+	net.Broadcast()
 end
 
 -- instantSync is optional. SetSyncVar will set the SyncVar however it will not update it with all clients unless instantSync is true.
@@ -221,10 +221,9 @@ end
 function entMeta:GetSyncVar(varID, fallback)
 	local targetData = impulse.Sync.Data[self.EntIndex(self)]
 
-	if targetData != nil then
-		if targetData[varID] != nil then
-			return targetData[varID][1]
-		end
+	if targetData != nil and targetData[varID] != nil then
+		return targetData[varID][1]
 	end
+
 	return fallback
 end

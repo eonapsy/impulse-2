@@ -7,28 +7,28 @@ teamID = 0
 CLASS_EMPTY = 0
 
 function impulse.Teams.Define(teamData)
-    teamID = teamID + 1
-    impulse.Teams.Data[teamID] = teamData
-    impulse.Teams.NameRef[teamData.name] = teamID
+	teamID = teamID + 1
+	impulse.Teams.Data[teamID] = teamData
+	impulse.Teams.NameRef[teamData.name] = teamID
 
-    if teamData.classes then
-    	impulse.Teams.Data[teamID].ClassRef = {}
+	if teamData.classes then
+		impulse.Teams.Data[teamID].ClassRef = {}
 
-    	for id,k in pairs(teamData.classes) do
-    		impulse.Teams.Data[teamID].ClassRef[id] = k.name
-    	end
-    end
+		for id,k in pairs(teamData.classes) do
+			impulse.Teams.Data[teamID].ClassRef[id] = k.name
+		end
+	end
 
-    if teamData.ranks then
-    	impulse.Teams.Data[teamID].RankRef = {}
+	if teamData.ranks then
+		impulse.Teams.Data[teamID].RankRef = {}
 
-    	for id,k in pairs(teamData.ranks) do
-    		impulse.Teams.Data[teamID].RankRef[id] = k.name
-    	end
-    end
+		for id,k in pairs(teamData.ranks) do
+			impulse.Teams.Data[teamID].RankRef[id] = k.name
+		end
+	end
 
-    team.SetUp(teamID, teamData.name, teamData.color, false)
-    return teamID
+	team.SetUp(teamID, teamData.name, teamData.color, false)
+	return teamID
 end
 
 function meta:CanBecomeTeam(teamID, notify)
@@ -60,11 +60,9 @@ function meta:CanBecomeTeam(teamID, notify)
 		return false
 	end
 
-	if SERVER and teamData.cp then
-		if self:HasIllegalInventoryItem() then
-			if notify then self:Notify("You cannot become this team with illegal items in your inventory.") end
-			return false
-		end
+	if SERVER and teamData.cp and self:HasIllegalInventoryItem() then
+		if notify then self:Notify("You cannot become this team with illegal items in your inventory.") end
+		return false
 	end
 
 	if teamData.limit then
@@ -97,7 +95,6 @@ end
 function meta:CanBecomeTeamClass(classID, notify)
 	local teamData = impulse.Teams.Data[self:Team()]
 	local classData = teamData.classes[classID]
-	local classPlayers = 0
 
 	if not self:Alive() then return false end
 
@@ -105,7 +102,7 @@ function meta:CanBecomeTeamClass(classID, notify)
 
 	if classData.whitelistLevel and classData.whitelistUID and not self:HasTeamWhitelist(classData.whitelistUID, classData.whitelistLevel) then
 		local add = classData.whitelistFailMessage or ""
-		if notify then self:Notify("You must be whitelisted to play as this rank. "..add) end
+		if notify then self:Notify("You must be whitelisted to play as this rank. " .. add) end
 		return false
 	end
 
@@ -151,23 +148,22 @@ end
 function meta:CanBecomeTeamRank(rankID, notify)
 	local teamData = impulse.Teams.Data[self:Team()]
 	local rankData = teamData.ranks[rankID]
-	local rankPlayers = 0
 
 	if not self:Alive() then return false end
 
 	if rankData.whitelistLevel and not self:HasTeamWhitelist(self:Team(), rankData.whitelistLevel) then
 		local add = rankData.whitelistFailMessage or ""
-		if notify then self:Notify("You must be whitelisted to play as this rank. "..add) end
+		if notify then self:Notify("You must be whitelisted to play as this rank. " .. add) end
 		return false
 	end
-		
+
 	if rankData.xp and rankData.xp > self:GetXP() and forced == false then
 		if notify then self:Notify("You don't have the XP required to play as this rank.") end
 		return false
 	end
 
 	if rankData.limit then
-		local rankPlayers = 0 
+		local rankPlayers = 0
 
 		for v,k in pairs(team.GetPlayers(self:Team())) do
 			if k:GetTeamRank() == rankID then

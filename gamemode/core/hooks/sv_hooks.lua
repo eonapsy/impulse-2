@@ -1093,9 +1093,9 @@ function GM:PlayerSpawnProp(ply, model)
 
 	if ply:CanAfford(price) then
 		ply:TakeMoney(price)
-		ply:Notify("You have purchased a prop for "..impulse.Config.CurrencyPrefix..price..".")
+		ply:Notify("You have purchased a prop for " .. hook.Run("impulseCurrencyString", price) .. ".")
 	else
-		ply:Notify("You need "..impulse.Config.CurrencyPrefix..price.." to spawn this prop.")
+		ply:Notify("You need " .. hook.Run("impulseCurrencyString", price) .. " to spawn this prop.")
 		return false
 	end
 

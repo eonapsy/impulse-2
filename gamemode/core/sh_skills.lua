@@ -17,7 +17,7 @@ end
 if CLIENT then
 	function meta:GetSkillXP(name)
 		local xp = impulse.Skills.Data[name]
-		
+
 		return xp or 0
 	end
 

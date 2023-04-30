@@ -18,7 +18,7 @@ function impulse.IsEmpty(vector, ignore) -- findpos and isempty are from darkrp
         end
     end
 
-	return a and b
+    return a and b
 end
 
 function impulse.FindEmptyPos(pos, ignore, distance, step, area)
@@ -59,19 +59,19 @@ end
 
 -- divert from slow nwvar shit
 function meta:GetPropCount(skip)
-    if ( !self:IsValid() ) then return end
+    if ( not self:IsValid() ) then return end
 
     local key = self:UniqueID()
     local tab = g_SBoxObjects[key]
 
-    if ( !tab || !tab["props"] ) then
+    if ( not tab or not tab["props"] ) then
         return 0
     end
 
     local c = 0
 
     for k, v in pairs(tab["props"]) do
-        if ( IsValid(v) and !v:IsMarkedForDeletion() ) then
+        if ( IsValid(v) and not v:IsMarkedForDeletion() ) then
             c = c + 1
         else
             tab["props"][k] = nil
@@ -97,14 +97,14 @@ function meta:AddPropCount(ent)
 
     self:GetPropCount()
 
-    ent:CallOnRemove("GetPropCountUpdate", function(ent, ply) ply:GetPropCount() end, self)
+    ent:CallOnRemove("GetPropCountUpdate", function(_, ply) ply:GetPropCount() end, self)
 end
 
 function meta:ResetSubMaterials()
     if not self.SetSubMats then
         return
     end
-    
+
     for v,k in pairs(self.SetSubMats) do
         self:SetSubMaterial(v - 1, nil)
     end

@@ -2,7 +2,7 @@ impulse.Doors = impulse.Doors or {}
 impulse.Doors.Data = impulse.Doors.Data or {}
 
 local eMeta = FindMetaTable("Entity")
-local fileName = "impulse/doors/"..game.GetMap()
+local fileName = "impulse/doors/" .. game.GetMap()
 
 file.CreateDir("impulse/doors")
 
@@ -10,27 +10,25 @@ function impulse.Doors.Save()
 	local doors = {}
 
 	for v,k in pairs(ents.GetAll()) do
-		if k:IsDoor() and k:CreatedByMap() then
-			if k:GetSyncVar(SYNC_DOOR_BUYABLE, true) == false then
-				doors[k:MapCreationID()] = {
-					name = k:GetSyncVar(SYNC_DOOR_NAME, nil),
-					group = k:GetSyncVar(SYNC_DOOR_GROUP, nil),
-					pos = k:GetPos(),
-					buyable = k:GetSyncVar(SYNC_DOOR_BUYABLE, false)
-				}
-			end
+		if k:IsDoor() and k:CreatedByMap() and k:GetSyncVar(SYNC_DOOR_BUYABLE, true) == false then
+			doors[k:MapCreationID()] = {
+				name = k:GetSyncVar(SYNC_DOOR_NAME, nil),
+				group = k:GetSyncVar(SYNC_DOOR_GROUP, nil),
+				pos = k:GetPos(),
+				buyable = k:GetSyncVar(SYNC_DOOR_BUYABLE, false)
+			}
 		end
 	end
 
-	print("[impulse] Saving doors to impulse/doors/"..game.GetMap()..".dat | Doors saved: "..#doors)
-	file.Write(fileName..".dat", util.TableToJSON(doors))
+	print("[impulse] Saving doors to impulse/doors/" .. game.GetMap() .. ".dat | Doors saved: " .. #doors)
+	file.Write(fileName .. ".dat", util.TableToJSON(doors))
 end
 
 function impulse.Doors.Load()
 	impulse.Doors.Data = {}
 
-	if file.Exists(fileName..".dat", "DATA") then
-		local mapDoorData = util.JSONToTable(file.Read(fileName..".dat", "DATA"))
+	if file.Exists(fileName .. ".dat", "DATA") then
+		local mapDoorData = util.JSONToTable(file.Read(fileName .. ".dat", "DATA"))
 		local posBuffer = {}
 		local posFinds = {}
 
@@ -40,20 +38,20 @@ function impulse.Doors.Load()
 				continue
 			end
 
-			posBuffer[doorData.pos.x.."|"..doorData.pos.y.."|"..doorData.pos.z] = doorID
+			posBuffer[doorData.pos.x .. "|" .. doorData.pos.y .. "|" .. doorData.pos.z] = doorID
 		end
 
 		-- try to find every door via the pos value (update safeish)
 		for v,k in pairs(ents.GetAll()) do
 			local p = k.GetPos(k)
-			local found = posBuffer[p.x.."|"..p.y.."|"..p.z]
+			local found = posBuffer[p.x .. "|" .. p.y .. "|" .. p.z]
 
 			if found and k:IsDoor() then
 				local doorEnt = k
 				local doorData = mapDoorData[found]
 				local doorIndex = doorEnt:EntIndex()
 				posFinds[doorIndex] = true
-				
+
 				if doorData.name then doorEnt:SetSyncVar(SYNC_DOOR_NAME, doorData.name, true) end
 				if doorData.group then doorEnt:SetSyncVar(SYNC_DOOR_GROUP, doorData.group, true) end
 				if doorData.buyable != nil then doorEnt:SetSyncVar(SYNC_DOOR_BUYABLE, false, true) end
@@ -70,12 +68,12 @@ function impulse.Doors.Load()
 				if posFinds[doorIndex] then
 					continue
 				end
-				
+
 				if doorData.name then doorEnt:SetSyncVar(SYNC_DOOR_NAME, doorData.name, true) end
 				if doorData.group then doorEnt:SetSyncVar(SYNC_DOOR_GROUP, doorData.group, true) end
 				if doorData.buyable != nil then doorEnt:SetSyncVar(SYNC_DOOR_BUYABLE, false, true) end
 
-				print("[impulse] Warning! Added door by HammerID value because it could not be found via pos. Door index: "..doorIndex..". Please investigate.")
+				print("[impulse] Warning! Added door by HammerID value because it could not be found via pos. Door index: " .. doorIndex .. ". Please investigate.")
 			end
 		end
 
@@ -181,7 +179,7 @@ concommand.Add("impulse_door_sethidden", function(ply, cmd, args)
 		traceEnt:SetSyncVar(SYNC_DOOR_NAME, nil, true)
 		traceEnt:SetSyncVar(SYNC_DOOR_OWNERS, nil, true)
 
-		ply:Notify("Door "..traceEnt:EntIndex().." show = "..args[1])
+		ply:Notify("Door " .. traceEnt:EntIndex() .. " show = " .. args[1])
 
 		impulse.Doors.Save()
 	end
@@ -203,7 +201,7 @@ concommand.Add("impulse_door_setgroup", function(ply, cmd, args)
 		traceEnt:SetSyncVar(SYNC_DOOR_NAME, nil, true)
 		traceEnt:SetSyncVar(SYNC_DOOR_OWNERS, nil, true)
 
-		ply:Notify("Door "..traceEnt:EntIndex().." group = "..args[1])
+		ply:Notify("Door " .. traceEnt:EntIndex() .. " group = " .. rgs[1])
 
 		impulse.Doors.Save()
 	end
@@ -225,7 +223,7 @@ concommand.Add("impulse_door_removegroup", function(ply, cmd, args)
 		traceEnt:SetSyncVar(SYNC_DOOR_NAME, nil, true)
 		traceEnt:SetSyncVar(SYNC_DOOR_OWNERS, nil, true)
 
-		ply:Notify("Door "..traceEnt:EntIndex().." group = nil")
+		ply:Notify("Door " .. traceEnt:EntIndex() .. " group = nil")
 
 		impulse.Doors.Save()
 	end

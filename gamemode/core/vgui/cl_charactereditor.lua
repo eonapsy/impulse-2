@@ -57,7 +57,7 @@ function PANEL:Init()
 
 		if cost > 0 then
 			self:SetDisabled(false)
-			self:SetText("Change ("..impulse.Config.CurrencyPrefix..cost..")")
+			self:SetText("Change (" .. hook.Run("impulseCurrencyString", cost) .. ")")
 		else
 			self:SetDisabled(true)
 			self:SetText("Change")
@@ -115,7 +115,7 @@ function PANEL:Init()
 
   	self.genderWarn = vgui.Create("DLabel", self)
   	self.genderWarn:SetFont("Impulse-Elements16")
-  	self.genderWarn:SetText("Costs "..impulse.Config.CurrencyPrefix..impulse.Config.CosmeticGenderPrice.." per change")
+  	self.genderWarn:SetText("Costs " .. hook.Run("impulseCurrencyString", impulse.Config.CosmeticGenderPrice) .. " per change")
   	self.genderWarn:SizeToContents()
   	self.genderWarn:SetPos(10, 90)
 
@@ -152,7 +152,7 @@ function PANEL:Init()
 
   	self.skinWarn = vgui.Create("DLabel", self)
   	self.skinWarn:SetFont("Impulse-Elements16")
-  	self.skinWarn:SetText("Costs "..impulse.Config.CurrencyPrefix..impulse.Config.CosmeticModelSkinPrice.." per change")
+  	self.skinWarn:SetText("Costs " .. hook.Run("impulseCurrencyString", impulse.Config.CosmeticModelSkinPrice) .. " per change")
   	self.skinWarn:SizeToContents()
   	self.skinWarn:SetPos(400, 310)
 end

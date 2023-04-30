@@ -2,7 +2,7 @@ function meta:MakeAFK()
 	if self.AFKImmune then
 		return
 	end
-	
+
 	self.AFKState = true
 
 	local playercount = player.GetCount()
@@ -13,7 +13,7 @@ function meta:MakeAFK()
 		if self:IsAdmin() then
 			return
 		end
-		
+
 		self:Kick("You have been kicked for inactivity on a busy server. See you again soon!")
 		return
 	end

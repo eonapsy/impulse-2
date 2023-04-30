@@ -107,7 +107,7 @@ function PANEL:QuickActions()
 	local btn = self.list:Add("DButton")
 	if impulse.IsHighRes() then btn:SetTall(30) btn:SetFont("Impulse-Elements17-Shadow") end
 	btn:Dock(TOP)
-	btn:SetText("Change RP name (requires "..impulse.Config.CurrencyPrefix..impulse.Config.RPNameChangePrice..")")
+	btn:SetText("Change RP name (requires " .. hook.Run("impulseCurrencyString", impulse.Config.RPNameChangePrice) .. ")")
 	function btn:DoClick()
 		Derma_StringRequest("impulse", "Enter your new RP name:", nil, function(text)
 			net.Start("impulseChangeRPName")
@@ -367,7 +367,7 @@ function PANEL:Business()
 		else
 			item:SetSize(58,58)
 		end
-		item:SetTooltip(name.." \n"..impulse.Config.CurrencyPrefix..k.price)
+		item:SetTooltip(name .. " \n" .. hook.Run("impulseCurrencyString", k.price))
 		item.id = table.KeyFromValue(impulse.Business.DataRef, name)
 
 		function item:DoClick()
@@ -379,7 +379,7 @@ function PANEL:Business()
 		local costLbl = vgui.Create("DLabel", item)
 		costLbl:SetPos(5,HIGH_RES(35, 55))
 		costLbl:SetFont(HIGH_RES("Impulse-Elements20-Shadow", "Impulse-Elements22-Shadow"))
-		costLbl:SetText(impulse.Config.CurrencyPrefix..k.price)
+		costLbl:SetText(hook.Run("impulseCurrencyString", k.price))
 		costLbl:SizeToContents()
 	end
 end

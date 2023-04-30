@@ -161,7 +161,7 @@ function impulse.Inventory.GetCraftingTime(mix)
 	for v,k in pairs(items) do
 		local hasCustom = impulse.Inventory.CraftInfo[v]
 
-		for i=1, k.take do
+		for i = 1, k.take do
 			if hasCustom and hasCustom.sound then
 				table.insert(sounds, {time, hasCustom.sound})
 			else
@@ -206,7 +206,7 @@ function impulse.Inventory.PickRandomCraftSound(crafttype)
 		crafttype = "generic"
 	end
 
-	return "impulse/craft/"..crafttype.."/"..math.random(1, max)..".wav"
+	return "impulse/craft/" .. crafttype .. "/" .. math.random(1, max) .. ".wav"
 end
 
 --- Returns the max capacity of the players storage box

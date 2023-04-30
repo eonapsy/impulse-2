@@ -7,11 +7,10 @@ function PANEL:Init()
 	self:MakePopup()
 
 	local bankBalance = LocalPlayer():GetSyncVar(SYNC_BANKMONEY, 0)
-	local prefix = impulse.Config.CurrencyPrefix
 	local parent = self
 
 	self.balance = vgui.Create("DLabel", self)
-	self.balance:SetText("Balance: "..prefix..bankBalance)
+	self.balance:SetText("Balance: " .. hook.Run("impulseCurrencyString", bankBalance))
 	self.balance:SetFont("Impulse-Elements18")
 	self.balance:SizeToContents()
 	self.balance:SetPos(100 - (self.balance:GetWide()/2), 30)
@@ -62,9 +61,9 @@ function PANEL:Init()
 end
 
 function PANEL:SetBalance(m)
-	self.balance:SetText("Balance: "..impulse.Config.CurrencyPrefix..m)
+	self.balance:SetText("Balance: " .. hook.Run("impulseCurrencyString", m))
 	self.balance:SizeToContents()
-	self.balance:SetPos(100 - (self.balance:GetWide()/2), 30)
+	self.balance:SetPos(100 - (self.balance:GetWide() / 2), 30)
 end
 
 function PANEL:Think()

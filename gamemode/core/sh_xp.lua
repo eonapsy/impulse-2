@@ -14,13 +14,13 @@ if SERVER then
 
 		return self:SetSyncVar(SYNC_XP, amount, true)
 	end
-	
+
 	function meta:TakeXP(amount)
-		if not ( amount > 0 ) then
+		if ( amount <= 0 ) then
 			print("Input must be more than 0!")
 			return
 		end
-		
+
 		local setAmount = self:GetXP() - amount
 
 		self:SetXP(setAmount)
@@ -37,12 +37,8 @@ if SERVER then
 	end
 
 	function meta:GiveTimedXP()
-		if self:IsDonator() then
-			self:AddXP(impulse.Config.XPGetVIP)
-			self:Notify("You have received "..impulse.Config.XPGetVIP.." XP for playing.")
-		else
-			self:AddXP(impulse.Config.XPGet)
-			self:Notify("You have received "..impulse.Config.XPGet.." XP for playing.")
-		end
+		local xpToGive = self:IsDonator() and impulse.Config.XPGetVIP or impulse.Config.XPGet
+		self:AddXP(xpToGive)
+		self:Notify(hook.Run("impulseGetXPMessage", xpToGive, self) or "You have received " .. xpToGive .. " XP for playing.")
 	end
 end

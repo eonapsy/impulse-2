@@ -1,7 +1,6 @@
 meta.OldSetTeam = meta.OldSetTeam or meta.SetTeam
 function meta:SetTeam(teamID, forced)
 	local teamData = impulse.Teams.Data[teamID]
-	local teamPlayers = team.NumPlayers(teamID)
 
 	if teamData.model then
 		self:SetModel(teamData.model)
@@ -17,7 +16,7 @@ function meta:SetTeam(teamID, forced)
 
 	if teamData.bodygroups then
 		for v, bodygroupData in pairs(teamData.bodygroups) do
-			self:SetBodygroup(bodygroupData[1], (bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1]))))
+			self:SetBodygroup(bodygroupData[1], bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1])))
 		end
 	else
 		self:SetBodyGroups("0000000")
@@ -28,11 +27,11 @@ function meta:SetTeam(teamID, forced)
 	if self:IsCP() or teamData.cp then
 		self:StripAmmo()
 	end
-	
+
 	self:UnEquipInventory()
 	self:ClearRestrictedInventory()
 	self:StripWeapons()
-	
+
 	if teamData.loadout then
 		for v,weapon in pairs(teamData.loadout) do
 			self:Give(weapon)
@@ -68,7 +67,6 @@ end
 function meta:SetTeamClass(classID, skipLoadout)
 	local teamData = impulse.Teams.Data[self:Team()]
 	local classData = teamData.classes[classID]
-	local classPlayers = 0
 
 	if classData.model then
 		self:SetModel(classData.model)
@@ -85,14 +83,14 @@ function meta:SetTeamClass(classID, skipLoadout)
 	end
 
 	self:SetBodyGroups("0000000")
-	
+
 	if classData.bodygroups then
 		for v, bodygroupData in pairs(classData.bodygroups) do
-			self:SetBodygroup(bodygroupData[1], (bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1]))))
+			self:SetBodygroup(bodygroupData[1], bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1])))
 		end
 	elseif teamData.bodygroups then
 		for v, bodygroupData in pairs(teamData.bodygroups) do
-			self:SetBodygroup(bodygroupData[1], (bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1]))))
+			self:SetBodygroup(bodygroupData[1], bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1])))
 		end
 	end
 
@@ -119,14 +117,14 @@ function meta:SetTeamClass(classID, skipLoadout)
 
 		if classData.items then
 			for v,item in pairs(classData.items) do
-				for i=1, (item.amount or 1) do
+				for i = 1, (item.amount or 1) do
 					self:GiveInventoryItem(item.class, 1, true)
 				end
 			end
 		else
 			if teamData.items then
 				for v,item in pairs(teamData.items) do
-					for i=1, (item.amount or 1) do
+					for i = 1, (item.amount or 1) do
 						self:GiveInventoryItem(item.class, 1, true)
 					end
 				end
@@ -134,7 +132,7 @@ function meta:SetTeamClass(classID, skipLoadout)
 
 			if classData.itemsAdd then
 				for v,item in pairs(classData.itemsAdd) do
-					for i=1, (item.amount or 1) do
+					for i = 1, (item.amount or 1) do
 						self:GiveInventoryItem(item.class, 1, true)
 					end
 				end
@@ -188,11 +186,11 @@ function meta:SetTeamRank(rankID)
 
 	if rankData.bodygroups then
 		for v, bodygroupData in pairs(rankData.bodygroups) do
-			self:SetBodygroup(bodygroupData[1], (bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1]))))
+			self:SetBodygroup(bodygroupData[1], bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1])))
 		end
 	elseif teamData.bodygroups then
 		for v, bodygroupData in pairs(teamData.bodygroups) do
-			self:SetBodygroup(bodygroupData[1], (bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1]))))
+			self:SetBodygroup(bodygroupData[1], bodygroupData[2] or math.random(0, self:GetBodygroupCount(bodygroupData[1])))
 		end
 	else
 		self:SetBodyGroups("0000000")
@@ -237,14 +235,14 @@ function meta:SetTeamRank(rankID)
 
 	if rankData.items then
 		for v,item in pairs(rankData.items) do
-			for i=1, (item.amount or 1) do
+			for i = 1, (item.amount or 1) do
 				self:GiveInventoryItem(item.class, 1, true)
 			end
 		end
 	else
 		if teamData.items then
 			for v,item in pairs(teamData.items) do
-				for i=1, (item.amount or 1) do
+				for i = 1, (item.amount or 1) do
 					self:GiveInventoryItem(item.class, 1, true)
 				end
 			end
@@ -252,7 +250,7 @@ function meta:SetTeamRank(rankID)
 
 		if classData.itemsAdd then
 			for v,item in pairs(classData.itemsAdd) do
-				for i=1, (item.amount or 1) do
+				for i = 1, (item.amount or 1) do
 					self:GiveInventoryItem(item.class, 1, true)
 				end
 			end
@@ -260,7 +258,7 @@ function meta:SetTeamRank(rankID)
 
 		if rankData.itemsAdd then
 			for v,item in pairs(rankData.itemsAdd) do
-				for i=1, (item.amount or 1) do
+				for i = 1, (item.amount or 1) do
 					self:GiveInventoryItem(item.class, 1, true)
 				end
 			end
@@ -294,19 +292,19 @@ function impulse.Teams.WhitelistSetup(steamid)
 end
 
 function impulse.Teams.SetWhitelist(steamid, team, level)
-	local inTable = impulse.Teams.GetWhitelist(steamid, team, function(exists)
+	impulse.Teams.GetWhitelist(steamid, team, function(exists)
 		if exists then
 			local query = mysql:Update("impulse_whitelists")
 			query:Update("level", level)
 			query:Where("team", team)
 			query:Where("steamid", steamid)
-			query:Execute()	
+			query:Execute()
 		else
 			local query = mysql:Insert("impulse_whitelists")
 			query:Insert("level", level)
 			query:Insert("team", team)
 			query:Insert("steamid", steamid)
-			query:Execute()	
+			query:Execute()
 		end
 	end)
 end

@@ -12,14 +12,14 @@ end
 if SERVER then
 	function ENT:Initialize()
 		self:SetModel("models/props/cs_assault/money.mdl")
-    	self:PhysicsInit(SOLID_VPHYSICS)
-    	self:SetMoveType(MOVETYPE_VPHYSICS)
-    	self:SetSolid(SOLID_VPHYSICS)
-    	self:SetUseType(SIMPLE_USE)
-    	self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
+		self:PhysicsInit(SOLID_VPHYSICS)
+		self:SetMoveType(MOVETYPE_VPHYSICS)
+		self:SetSolid(SOLID_VPHYSICS)
+		self:SetUseType(SIMPLE_USE)
+		self:SetCollisionGroup(COLLISION_GROUP_WEAPON)
 
-    	local physObj = self:GetPhysicsObject()
-    	self.nodupe = true
+		local physObj = self:GetPhysicsObject()
+		self.nodupe = true
 
 		physObj:Wake()
 	end
@@ -33,7 +33,7 @@ if SERVER then
 		if activator:IsPlayer() then
 			self:Remove()
 			activator:GiveMoney(self.money)
-			activator:Notify("You have picked up "..impulse.Config.CurrencyPrefix..self.money..".")
+			activator:Notify("You have picked up " .. hook.Run("impulseCurrencyString", self.money) .. ".")
 		end
 	end
 
@@ -55,7 +55,7 @@ else
 		local ang = self:GetAngles()
 
 		surface.SetFont("Impulse-Elements18-Shadow")
-		local value = impulse.Config.CurrencyPrefix..self:GetMoneyVal() or "?"
+		local value = hook.Run("impulseCurrencyString", self:GetMoneyVal()) or "?"
 		local wide = surface.GetTextSize(value)
 
 		cam.Start3D2D(pos + ang:Up() * 0.82, ang, 0.1)

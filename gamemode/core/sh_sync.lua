@@ -84,11 +84,10 @@ if CLIENT then
 	function entMeta:GetSyncVar(varID, fallback)
 		local targetData = impulse.Sync.Data[self.EntIndex(self)]
 
-		if targetData != nil then
-			if targetData[varID] != nil then
-				return targetData[varID]
-			end
+		if targetData != nil and targetData[varID] != nil then
+			return targetData[varID]
 		end
+
 		return fallback
 	end
 
@@ -137,10 +136,8 @@ if CLIENT then
 		local varID = net.ReadUInt(SYNC_ID_BITS)
 		local syncEnt = impulse.Sync.Data[targetID]
 
-		if syncEnt then
-			if impulse.Sync.Data[targetID][varID] != nil then
-				impulse.Sync.Data[targetID][varID] = nil
-			end
+		if syncEnt and impulse.Sync.Data[targetID][varID] != nil then
+			impulse.Sync.Data[targetID][varID] = nil
 		end
 
 		hook.Run("OnSyncUpdate", varID, targetID)
@@ -160,21 +157,19 @@ ioRegister[SERVER][SYNC_STRING] = function(val) return net.WriteString(val) end
 ioRegister[CLIENT][SYNC_STRING] = function(val) return net.ReadString() end
 ioRegister[SERVER][SYNC_MINITABLE] = function(val) return net.WriteData(pon.encode(val), 32) end
 ioRegister[CLIENT][SYNC_MINITABLE] = function(val) return pon.decode(net.ReadData(32)) end
-ioRegister[SERVER][SYNC_INTSTACK] = function(val) 
-	local count = net.WriteUInt(#val, 8)
-
+ioRegister[SERVER][SYNC_INTSTACK] = function(val)
 	for v,k in pairs(val) do
 		net.WriteUInt(k, 8)
 	end
-
 	return
 end
-ioRegister[CLIENT][SYNC_INTSTACK] = function(val) 
+
+ioRegister[CLIENT][SYNC_INTSTACK] = function(val)
 	local count = net.ReadUInt(8)
 	local compiled =  {}
 
 	for k = 1, count do
-		table.insert(compiled, (net.ReadUInt(8)))
+		table.insert(compiled, net.ReadUInt(8))
 	end
 
 	return compiled

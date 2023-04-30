@@ -77,7 +77,7 @@ function PANEL:NoGroup()
 	lbl:SetTextColor(darkText)
 
 	local lbl = vgui.Create("DLabel", self)
-	lbl:SetText("Creating a new group will cost "..impulse.Config.CurrencyPrefix..impulse.Config.GroupMakeCost.." and will require at least "..impulse.Config.GroupXPRequirement.."XP.")
+	lbl:SetText("Creating a new group will cost " .. hook.Run("impulseCurrencyString", impulse.Config.GroupMakeCost) .. " and will require at least " .. impulse.Config.GroupXPRequirement .. "XP.")
 	lbl:SetFont("Impulse-Elements14-Shadow")
 	lbl:Dock(TOP)
 	lbl:SetContentAlignment(5)
@@ -86,13 +86,13 @@ function PANEL:NoGroup()
 	local newGroup = vgui.Create("DButton", self)
 	newGroup:SetTall(25)
 	newGroup:SetWide(450)
-	newGroup:SetText("Create new group ("..impulse.Config.CurrencyPrefix..impulse.Config.GroupMakeCost..")")
+	newGroup:SetText("Create new group (" .. hook.Run("impulseCurrencyString", impulse.Config.GroupMakeCost) .. ")")
 	newGroup:DockMargin(120, 0, 120, 0)
 	newGroup:Dock(TOP)
 
 	function newGroup:DoClick()
 		if LocalPlayer():GetXP() < impulse.Config.GroupXPRequirement then
-			return LocalPlayer():Notify("You need at least "..impulse.Config.GroupXPRequirement.."XP to make a group.")
+			return LocalPlayer():Notify("You need at least " .. impulse.Config.GroupXPRequirement .. "XP to make a group.")
 		end
 
 		if not LocalPlayer():CanAfford(impulse.Config.GroupMakeCost) then

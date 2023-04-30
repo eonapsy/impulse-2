@@ -342,22 +342,22 @@ function GM:HUDPaint()
 	surface.SetFont("Impulse-Elements19")
 
 	surface.SetTextPos(136, y+64+yAdd)
-	surface.DrawText("Health: "..LocalPlayer():Health())
+	surface.DrawText("Health: " .. LocalPlayer():Health())
 	if seeColIcons == true then surface.SetDrawColor(healthCol) end
 	surface.SetMaterial(healthIcon)
-	surface.DrawTexturedRect(110, y+66+yAdd, 18, 16)
+	surface.DrawTexturedRect(110, y + 66 + yAdd, 18, 16)
 
 	surface.SetTextPos(136, y+86+yAdd)
-	surface.DrawText("Hunger: "..LocalPlayer():GetSyncVar(SYNC_HUNGER, 100))
+	surface.DrawText("Hunger: " .. LocalPlayer():GetSyncVar(SYNC_HUNGER, 100))
 	if seeColIcons == true then surface.SetDrawColor(hungerCol) end
 	surface.SetMaterial(hungerIcon)
-	surface.DrawTexturedRect(110, y+87+yAdd, 18, 18)
+	surface.DrawTexturedRect(110, y + 87 + yAdd, 18, 18)
 
-	surface.SetTextPos(136, y+108+yAdd)
-	surface.DrawText("Money: "..impulse.Config.CurrencyPrefix..LocalPlayer():GetSyncVar(SYNC_MONEY, 0))
+	surface.SetTextPos(136, y + 108 + yAdd)
+	surface.DrawText("Money: " .. hook.Run("impulseCurrencyString", LocalPlayer():GetSyncVar(SYNC_MONEY, 0)))
 	if seeColIcons == true then surface.SetDrawColor(moneyCol) end
 	surface.SetMaterial(moneyIcon)
-	surface.DrawTexturedRect(110, y+107+yAdd, 18, 18)
+	surface.DrawTexturedRect(110, y + 107 + yAdd, 18, 18)
 
 	surface.SetDrawColor(color_white)
 
@@ -366,11 +366,11 @@ function GM:HUDPaint()
 
 		surface.SetMaterial(exitIcon)
 		surface.DrawTexturedRect(10, y-30, 18, 18)
-		draw.DrawText("Sentence remaining: "..string.FormattedTime(timeLeft, "%02i:%02i"), "Impulse-Elements19", 35, y-30, color_white, TEXT_ALIGN_LEFT)
+		draw.DrawText("Sentence remaining: " .. string.FormattedTime(timeLeft, "%02i:%02i"), "Impulse-Elements19", 35, y-30, color_white, TEXT_ALIGN_LEFT)
 		aboveHUDUsed = true
 	end
 
-	draw.DrawText(lp:GetSyncVar(SYNC_XP, 0).."XP", "Impulse-Elements19", 55, y+150+(yAdd-8), color_white, TEXT_ALIGN_LEFT)
+	draw.DrawText(lp:GetSyncVar(SYNC_XP, 0) .. "XP", "Impulse-Elements19", 55, y + 150 + (yAdd-8), color_white, TEXT_ALIGN_LEFT)
 	surface.SetMaterial(xpIcon)
 	surface.DrawTexturedRect(30, y+150+(yAdd-8), 18, 18)
 

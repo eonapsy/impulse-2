@@ -2,7 +2,7 @@ concommand.Add("impulse_setgroup", function(ply, cmd, args)
 	if ply != NULL or IsValid(ply) then
 		return
 	end
-	
+
 	local steamid = args[1]
 	local group = args[2]
 
@@ -21,5 +21,5 @@ concommand.Add("impulse_setgroup", function(ply, cmd, args)
 	query:Where("steamid", steamid)
 	query:Execute()
 
-	print("[impulse] Set '"..steamid.."'' to group '"..group.."'.")
+	print("[impulse] Set '" .. steamid .. "'' to group '" .. group .. "'.")
 end)

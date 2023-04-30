@@ -498,10 +498,10 @@ net.Receive("impulseGetRefund", function()
 		local name = net.ReadString()
 		local amount = net.ReadUInt(8)
 
-		details = details.."\n"..amount.."x".." "..name
+		details = details .. "\n" .. amount .. "x" .. " " .. name
 	end
 
-	details = details.."\nTOTAL REFUND: "..impulse.Config.CurrencyPrefix..amount
+	details = details .. "\nTOTAL REFUND: " .. hook.Run("impulseCurrencyString", amount)
 
 	REFUND_MSG = messageTop..details
 end)

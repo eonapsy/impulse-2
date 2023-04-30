@@ -46,7 +46,7 @@ function meta:DragPlayer(ply)
 		self.ArrestedDragging = ply
 		impulse.Arrest.Dragged[ply] = true
 
-		self:Say("/me starts dragging "..ply:Name()..".")
+		self:Say("/me starts dragging " .. ply:Name() .. ".")
 	end
 end
 
@@ -64,7 +64,7 @@ end
 function meta:SendJailInfo(time, jailData)
 	net.Start("impulseSendJailInfo")
 	net.WriteUInt(time, 16)
-	
+
 	if jailData then
 		net.WriteBool(true)
 		net.WriteTable(jailData)
@@ -94,7 +94,7 @@ function meta:Jail(time, jailData)
 
 	for v,k in pairs(impulse.Config.PrisonCells) do
 		local cellData = impulse.Arrest.Prison[v]
-		
+
 		if cellData and not doCellMates then -- if something is assigned to this cell
 			continue
 		end
@@ -109,7 +109,7 @@ function meta:Jail(time, jailData)
 				jailData = jailData,
 				duration = time,
 				start = CurTime()
-			} 
+			}
 
 			break
 		else
@@ -132,11 +132,11 @@ function meta:Jail(time, jailData)
 		self:ClearIllegalInventory()
 		self:ClearRestrictedInventory()
 
-		self:Notify("You have been imprisoned for "..(time / 60).." minutes.")
+		self:Notify("You have been imprisoned for " .. (time / 60) .. " minutes.")
 		self:SendJailInfo(time, jailData)
 		self.InJail = cellID
 
-		timer.Create(self:UserID().."impulsePrison", time, 1, function()
+		timer.Create(self:UserID() .. "impulsePrison", time, 1, function()
 			if IsValid(self) and self.InJail then
 				self:UnJail()
 			end
@@ -156,7 +156,7 @@ function meta:UnJail()
 	if self:Alive() then
 		self:Spawn()
 	end
-	
+
 	self:UnArrest()
 
 	self:Notify("You have been released from prison as your sentence has ended.")
