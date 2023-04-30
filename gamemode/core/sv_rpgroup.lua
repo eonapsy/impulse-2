@@ -291,10 +291,8 @@ function impulse.Group.NetworkRanksToOnline(name)
 	for v,k in pairs(player.GetAll()) do
 		local x = k:GetSyncVar(SYNC_GROUP_NAME, nil)
 
-		if x and x == name then
-			if k:GroupHasPermission(5) or k:GroupHasPermission(6) then
-				rf:AddPlayer(k)
-			end
+		if x and x == name and (k:GroupHasPermission(5) or k:GroupHasPermission(6)) then
+			rf:AddPlayer(k)
 		end
 	end
 
@@ -375,7 +373,7 @@ end
 
 function meta:GroupAdd(name, rank, skipDb)
 	local id = impulse.Group.Groups[name].ID
-	local rank = rank or impulse.Group.GetDefaultRank(name)
+	rank = rank or impulse.Group.GetDefaultRank(name)
 
 	if not skipDb then
 		impulse.Group.DBAddPlayer(self:SteamID(), id, rank)
@@ -387,7 +385,6 @@ function meta:GroupAdd(name, rank, skipDb)
 end
 
 function meta:GroupRemove(name)
-	local id = impulse.Group.Groups[name].ID
 	local sid = self:SteamID()
 
 	impulse.Group.DBRemovePlayer(sid)
@@ -418,11 +415,9 @@ function meta:GroupLoad(groupid, rank)
 			impulse.Group.NetworkMetaData(self, name)
 		end)
 
-		if rank then
-			if not impulse.Group.Groups[name].Ranks[rank] then
-				rank = impulse.Group.GetDefaultRank(name)
-				impulse.Group.DBUpdatePlayerRank(self:SteamID(), rank)
-			end
+		if rank and not impulse.Group.Groups[name].Ranks[rank] then
+			rank = impulse.Group.GetDefaultRank(name)
+			impulse.Group.DBUpdatePlayerRank(self:SteamID(), rank)
 		end
 
 		rank = rank or impulse.Group.GetDefaultRank(name)
@@ -479,7 +474,7 @@ function impulse.Group.Load(id, onLoaded)
 				MaxSize = data.maxsize,
 				MaxStorage = data.maxstorage,
 				Ranks = pon.decode(data.ranks),
-				Data = (data.data and pon.decode(data.data) or {})
+				Data = data.data and pon.decode(data.data) or {}
 			}
 
 			if onLoaded then

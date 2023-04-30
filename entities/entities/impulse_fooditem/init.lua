@@ -1,10 +1,10 @@
-AddCSLuaFile("shared.lua") 
+AddCSLuaFile("shared.lua")
 include("shared.lua")
 
 function ENT:Initialize()
-	self:PhysicsInit(SOLID_VPHYSICS)  
-	self:SetMoveType(SOLID_VPHYSICS)  
-	self:SetSolid(SOLID_VPHYSICS)   
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(SOLID_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
 	self:SetUseType(SIMPLE_USE)
 	self:GetPhysicsObject():Wake()
 end

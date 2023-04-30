@@ -17,13 +17,13 @@ if YML.signals then
 	end
 
 	function db:onConnectionFailed(x, err)
-		print("[signals-mysql] Signals database connection failed! Error: "..err)
+		print("[signals-mysql] Signals database connection failed! Error: " .. err)
 	end
 end
 
 function impulse.Signals.Send(class, data, to, delay)
 	if not db then
-		return print("[impulse] Trying to call Signals.Send with no signal database setup!")	
+		return print("[impulse] Trying to call Signals.Send with no signal database setup!")
 	end
 
 	data = pon.encode(data)
@@ -37,7 +37,7 @@ function impulse.Signals.Send(class, data, to, delay)
 end
 
 function impulse.Signals.ReadAll(onDone)
-	local query = db:query("DELETE FROM `impulse_signals` WHERE wait <= "..os.time().." AND (dest = "..SIGNAL_SERVERID.." OR dest = 0) RETURNING *")
+	local query = db:query("DELETE FROM `impulse_signals` WHERE wait <= " .. os.time() .. " AND (dest = " .. SIGNAL_SERVERID .. " OR dest = 0) RETURNING *")
 	query:start()
 
 	function query:onSuccess(result)

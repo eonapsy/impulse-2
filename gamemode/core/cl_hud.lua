@@ -45,42 +45,32 @@ local function BlurRect(x, y, w, h)
 end
 
 local vignette = Material("impulse/vignette.png")
-local vig_alpha_normal = Color(10,10,10,190)
+local vig_alpha_normal = Color(10, 10, 10, 190)
 local lasthealth
-local time = 0
 local zoneLbl
 local gradient = Material("vgui/gradient-l")
 local watermark = Material("impulse/impulse-logo-white.png")
-local watermarkCol = Color(255,255,255,120)
+local watermarkCol = Color(255, 255, 255, 120)
 local fde = 0
-local hudBlackGrad = Color(40,40,40,180)
-local hudBlack = Color(20,20,20,140)
 local darkCol = Color(30, 30, 30, 190)
-local whiteCol = Color(255, 255, 255, 255)
 local iconsWhiteCol = Color(255, 255, 255, 220)
 local bleedFlashCol = Color(230, 0, 0, 220)
-local painCol = Color(255,10,10,80)
+local painCol = Color(255, 10, 10, 80)
 local crosshairGap = 5
 local crosshairLength = crosshairGap + 5
 local healthIcon = Material("impulse/icons/heart-128.png")
 local healthCol = Color(210, 0, 0, 255)
-local armourIcon = Material("impulse/icons/shield-128.png")
-local armourCol = Color(205, 190, 0, 255)
 local hungerIcon = Material("impulse/icons/bread-128.png")
 local hungerCol = Color(205, 133, 63, 255)
 local moneyIcon = Material("impulse/icons/banknotes-128.png")
 local moneyCol = Color(133, 227, 91, 255)
-local timeIcon = Material("impulse/icons/clock-128.png")
 local xpIcon = Material("impulse/icons/star-128.png")
 local warningIcon = Material("impulse/icons/warning-128.png")
-local infoIcon = Material("impulse/icons/info-128.png")
-local announcementIcon = Material("impulse/icons/megaphone-128.png")
 local exitIcon = Material("impulse/icons/exit-128.png")
 local bleedingIcon = Material("impulse/icons/droplet-256.png")
 
 local lastModel = ""
 local lastSkin = ""
-local lastTeam = 99
 local lastBodygroups = {}
 local iconLoaded = false
 
@@ -103,7 +93,7 @@ local function DrawOverheadInfo(target, alpha)
 	local col = ColorAlpha(team.GetColor(target:Team()), alpha)
 
 	if myGroup and not LocalPlayer():IsCP() and not target:IsCP() and group and rank and group == myGroup then
-		draw.DrawText(group.." - "..rank, "Impulse-Elements16-Shadow", pos.x, pos.y - 15, ColorAlpha(hotPink, alpha), 1)
+		draw.DrawText(group .. " - " .. rank, "Impulse-Elements16-Shadow", pos.x, pos.y - 15, ColorAlpha(hotPink, alpha), 1)
 	end
 
 	draw.DrawText(target:KnownName(), "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
