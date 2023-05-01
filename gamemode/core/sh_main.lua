@@ -198,7 +198,7 @@ function meta:IsCharacterFemale()
 end
 
 hook.Add("impulseCurrencyString", "getCurrencyString", function(value)
-    return impulse.Config.CurrencyPrefix .. value .. (impulse.Config.CurrencySuffix or 0)
+    return (impulse.Config.CurrencyPrefix or "") .. value .. (impulse.Config.CurrencySuffix or "")
 end)
 
 function impulse.FindPlayer(searchKey)

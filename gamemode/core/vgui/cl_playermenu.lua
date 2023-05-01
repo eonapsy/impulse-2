@@ -403,18 +403,18 @@ function PANEL:Info()
 
 	for v,k in pairs(impulse.chatCommands) do
 		local c = impulse.Config.MainColour
- 						
- 		if k.adminOnly == true and LocalPlayer():IsAdmin() == false then 
- 			continue 
- 		elseif k.adminOnly == true then
- 			c = impulse.Config.InteractColour
- 		end
- 						
- 		if k.superAdminOnly == true and LocalPlayer():IsSuperAdmin() == false then 
- 			continue 
- 		elseif k.superAdminOnly == true then
- 			c = Color(255, 0, 0, 255)
- 		end
+
+		if k.adminOnly == true and LocalPlayer():IsAdmin() == false then 
+			continue 
+		elseif k.adminOnly == true then
+			c = impulse.Config.InteractColour
+		end
+
+		if k.superAdminOnly == true and LocalPlayer():IsSuperAdmin() == false then 
+			continue 
+		elseif k.superAdminOnly == true then
+			c = Color(255, 0, 0, 255)
+		end
 
 		local command = commands:Add("DPanel", commands)
 		command:SetTall(40)

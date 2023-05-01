@@ -16,7 +16,7 @@ function HIGH_RES(low, high)
 	if impulse.IsHighRes() then
 		return high
 	end
-	
+
 	return low
 end
 

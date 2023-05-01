@@ -37,7 +37,7 @@ local function BlurRect(x, y, w, h)
 
 			render.UpdateScreenEffectTexture()
 
-			render.SetScissorRect(x, y, x+w, y+h, true)
+			render.SetScissorRect(x, y, x + w, y + h, true)
 			surface.DrawTexturedRect(X * -1, Y * -1, ScrW(), ScrH())
 			render.SetScissorRect(0, 0, 0, 0, false)
 		end
@@ -106,8 +106,8 @@ end
 
 local function DrawDoorInfo(target, alpha)
 	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
-	local doorOwners = target:GetSyncVar(SYNC_DOOR_OWNERS, nil) 
-	local doorName = target:GetSyncVar(SYNC_DOOR_NAME, nil) 
+	local doorOwners = target:GetSyncVar(SYNC_DOOR_OWNERS, nil)
+	local doorName = target:GetSyncVar(SYNC_DOOR_NAME, nil)
 	local doorGroup =  target:GetSyncVar(SYNC_DOOR_GROUP, nil)
 	local doorBuyable = target:GetSyncVar(SYNC_DOOR_BUYABLE, nil)
 	local col = ColorAlpha(impulse.Config.MainColour, alpha)
@@ -128,7 +128,7 @@ local function DrawDoorInfo(target, alpha)
 			local owner = Entity(k)
 
 			if IsValid(owner) and owner:IsPlayer() then
-				ownedBy = ownedBy.."\n"..owner:Name()
+				ownedBy = ownedBy .. "\n" .. owner:Name()
 			end
 		end
 		draw.DrawText(ownedBy, "Impulse-Elements18-Shadow", pos.x, pos.y, col, 1)
@@ -141,8 +141,6 @@ end
 
 local function DrawEntInfo(target, alpha)
 	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
-	local scrW = ScrW()
-	local scrH = ScrH()
 	local hudName = target.HUDName
 	local hudDesc = target.HUDDesc
 	local hudCol = target.HUDColour or impulse.Config.InteractColour
@@ -154,10 +152,8 @@ local function DrawEntInfo(target, alpha)
 	end
 end
 
-local function DrawButtonInfo(target, alpha)	
+local function DrawButtonInfo(target, alpha)
 	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
-	local scrW = ScrW()
-	local scrH = ScrH()
 	local buttonId = impulse_ActiveButtons[target:EntIndex()]
 	local hudCol = impulse.Config.InteractColour
 	local buttonData = impulse.Config.Buttons[buttonId]
@@ -192,7 +188,6 @@ function GM:HUDPaint()
 	local hudWidth, hudHeight = 300, 178
 	local seeColIcons = impulse.GetSetting("hud_iconcolours")
 	local aboveHUDUsed = false
-	local deathSoundPlayed
 
 	if SERVER_DOWN and CRASHSCREEN_ALLOW then
 		if not IsValid(CRASH_SCREEN) then
@@ -227,7 +222,7 @@ function GM:HUDPaint()
 		painFde = 0.7
 
 		surface.SetDrawColor(0, 0, 0, math.ceil(fde * 255))
-		surface.DrawRect(-1, -1, ScrW() +2, ScrH() +2)
+		surface.DrawRect(-1, -1, ScrW() + 2, ScrH() + 2)
 
 		local textCol = Color(255, 255, 255, math.ceil(fde * 255))
 
@@ -236,21 +231,21 @@ function GM:HUDPaint()
 		local wait = math.ceil(deathWait - CurTime())
 
 		if wait > 0 then
-			draw.SimpleText("You will respawn in "..wait.." "..(wait == 1 and "second" or "seconds")..".", "Impulse-Elements23", scrW/2, (scrH/2)+30, textCol, TEXT_ALIGN_CENTER)
-			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW/2, (scrH/2)+70, textCol, TEXT_ALIGN_CENTER)
+			draw.SimpleText("You will respawn in " .. wait .. " " .. (wait == 1 and "second" or "seconds") .. ".", "Impulse-Elements23", scrW / 2, (scrH / 2) + 30, textCol, TEXT_ALIGN_CENTER)
+			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW / 2, (scrH / 2 ) + 70, textCol, TEXT_ALIGN_CENTER)
 
-			draw.SimpleText("If you feel you were unfairly killed, submit a report (F3) for assistance.", "Impulse-Elements16", scrW/2, scrH-20, textCol, TEXT_ALIGN_CENTER)
+			draw.SimpleText("If you feel you were unfairly killed, submit a report (F3) for assistance.", "Impulse-Elements16", scrW / 2, scrH - 20, textCol, TEXT_ALIGN_CENTER)
 		end
 
 		if IsValid(PlayerIcon) then
 			PlayerIcon:Remove()
 		end
-		
+
 		return
 	else
 		if FORCE_FADESPAWN or deathEnding then
 			deathEnding = true
-			FORCE_FADESPAWN = nil 
+			FORCE_FADESPAWN = nil
 
 			local ft = FrameTime()
 			deathEndingFade = math.Clamp((deathEndingFade or 0) + ft * .15, 0, 1)
@@ -311,7 +306,7 @@ function GM:HUDPaint()
 			local p = LocalPlayer():GetEyeTrace().HitPos:ToScreen()
 			x, y = p.x, p.y
 		else
-			x, y = scrW/2, scrH/2
+			x, y = scrW / 2, scrH / 2
 		end
 
 		DrawCrosshair(x, y)
@@ -329,11 +324,11 @@ function GM:HUDPaint()
 	surface.SetFont("Impulse-Elements23")
 	surface.SetTextColor(color_white)
 	surface.SetDrawColor(color_white)
-	surface.SetTextPos(30, y+10)
+	surface.SetTextPos(30, y + 10)
 	surface.DrawText(LocalPlayer():Name())
 
 	surface.SetTextColor(team.GetColor(lpTeam))
-	surface.SetTextPos(30, y+30)
+	surface.SetTextPos(30, y + 30)
 	surface.DrawText(team.GetName(lpTeam))
 
 	local yAdd = 0
@@ -341,13 +336,13 @@ function GM:HUDPaint()
 	surface.SetTextColor(color_white)
 	surface.SetFont("Impulse-Elements19")
 
-	surface.SetTextPos(136, y+64+yAdd)
+	surface.SetTextPos(136, y + 64 + yAdd)
 	surface.DrawText("Health: " .. LocalPlayer():Health())
 	if seeColIcons == true then surface.SetDrawColor(healthCol) end
 	surface.SetMaterial(healthIcon)
 	surface.DrawTexturedRect(110, y + 66 + yAdd, 18, 16)
 
-	surface.SetTextPos(136, y+86+yAdd)
+	surface.SetTextPos(136, y + 86 + yAdd)
 	surface.DrawText("Hunger: " .. LocalPlayer():GetSyncVar(SYNC_HUNGER, 100))
 	if seeColIcons == true then surface.SetDrawColor(hungerCol) end
 	surface.SetMaterial(hungerIcon)
@@ -372,14 +367,14 @@ function GM:HUDPaint()
 
 	draw.DrawText(lp:GetSyncVar(SYNC_XP, 0) .. "XP", "Impulse-Elements19", 55, y + 150 + (yAdd-8), color_white, TEXT_ALIGN_LEFT)
 	surface.SetMaterial(xpIcon)
-	surface.DrawTexturedRect(30, y+150+(yAdd-8), 18, 18)
+	surface.DrawTexturedRect(30, y + 150 + (yAdd - 8), 18, 18)
 
 	local iconsX = 315
 	local bleedIconCol
 
 	if lp:GetSyncVar(SYNC_BLEEDING, false) then
 		if (nextBleedFlash or 0) < CurTime() then
-			bleedFlash = !bleedFlash
+			bleedFlash = not bleedFlash
 			nextBleedFlash = CurTime() + 1
 		end
 
@@ -403,7 +398,7 @@ function GM:HUDPaint()
 			surface.SetDrawColor(darkCol)
 			surface.DrawRect(scrW-70, scrH-45, 70, 30)
 			surface.SetTextPos(scrW-60, scrH-40)
-			surface.DrawText(weapon:Clip1().."/"..LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType()))
+			surface.DrawText(weapon:Clip1() .. "/" .. LocalPlayer():GetAmmoCount(weapon:GetPrimaryAmmoType()))
 		elseif weapon:GetClass() == "weapon_physgun" or weapon:GetClass() == "gmod_tool" then
 			draw.DrawText("Don't have this weapon out in RP.\nYou may be punished for this.", "Impulse-Elements16", 35, y-35, color_white, TEXT_ALIGN_LEFT)
 			surface.SetMaterial(warningIcon)
@@ -415,14 +410,14 @@ function GM:HUDPaint()
 
 			surface.SetFont("Impulse-Elements18-Shadow")
 			surface.SetTextPos(scrW-130, scrH-50)
-			surface.DrawText("Props: "..LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0).."/"..((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit))
+			surface.DrawText("Props: " .. LocalPlayer():GetSyncVar(SYNC_PROPCOUNT, 0) .. "/" .. ((LocalPlayer():IsDonator() and impulse.Config.PropLimitDonator) or impulse.Config.PropLimit))
 		end
 	end
 
 	if not aboveHUDUsed then
 		if impulse.ShowZone then
 			if IsValid(zoneLbl) then
-				zoneLbl:Remove()	
+				zoneLbl:Remove()
 			end
 
 			zoneLbl = vgui.Create("impulseZoneLabel")
@@ -437,7 +432,7 @@ function GM:HUDPaint()
 
 	if not IsValid(PlayerIcon) and impulse.hudEnabled == true then
 		PlayerIcon = vgui.Create("impulseSpawnIcon")
-		PlayerIcon:SetPos(30, y+60)
+		PlayerIcon:SetPos(30, y + 60)
 		PlayerIcon:SetSize(64, 64)
 		PlayerIcon:SetModel(LocalPlayer():GetModel(), LocalPlayer():GetSkin())
 
@@ -455,7 +450,7 @@ function GM:HUDPaint()
 			end
 		end)
 	end
-	
+
 	local bodygroupChange = false
 
 	if (nextBodygroupChangeCheck or 0) < CurTime() and IsValid(PlayerIcon) then
@@ -508,9 +503,9 @@ function GM:HUDPaint()
 		surface.SetTextPos(390, y + 30)
 		surface.SetTextColor(watermarkCol)
 		surface.SetFont("Impulse-Elements18-Shadow")
-		surface.DrawText("PREVIEW BUILD - "..impulse.Version.." - "..LocalPlayer():SteamID64().. " - ".. os.date("%H:%M:%S - %d/%m/%Y", os.time()))
+		surface.DrawText("PREVIEW BUILD - " .. impulse.Version .. " - " .. LocalPlayer():SteamID64() .. " - " .. os.date("%H:%M:%S - %d/%m/%Y", os.time()))
 		surface.SetTextPos(390, y + 50)
-		surface.DrawText("SCHEMA: "..SCHEMA_NAME.." VERSION: "..impulse.Config.SchemaVersion or "?")
+		surface.DrawText("SCHEMA: " .. SCHEMA_NAME .. " VERSION: " .. impulse.Config.SchemaVersion or "?")
 	end
 
 	-- dev hud
@@ -529,11 +524,11 @@ function GM:HUDPaint()
 			surface.DrawText(tostring(traceEnt))
 
 			surface.SetTextPos((scrW / 2) + 30, (scrH / 2) - 80)
-			surface.DrawText(traceEnt:GetModel().."     "..traceData.HitTexture or "")
+			surface.DrawText(traceEnt:GetModel() .. "     " .. traceData.HitTexture or "")
 
 			local syncData = impulse.Sync.Data[traceEnt:EntIndex()]
 			local netData
-			local y = (scrH / 2) - 40
+			y = (scrH / 2) - 40
 
 			if syncData then
 				for v,k in pairs(syncData) do
@@ -542,7 +537,7 @@ function GM:HUDPaint()
 					end
 
 					surface.SetTextPos((scrW / 2) + 30, y)
-					surface.DrawText("syncvalue: "..v.." ; "..tostring(k))
+					surface.DrawText("syncvalue: " .. v .. " ; " .. tostring(k))
 					y = y + 20
 				end
 			end
@@ -554,7 +549,7 @@ function GM:HUDPaint()
 			if netData then
 				for v,k in pairs(netData) do
 					surface.SetTextPos((scrW / 2) + 30, y)
-					surface.DrawText("netvalue: "..v.." ; "..tostring(k))
+					surface.DrawText("netvalue: " .. v .. " ; " .. tostring(k))
 					y = y + 20
 				end
 			end
@@ -598,7 +593,7 @@ function GM:HUDPaintBackground()
 
 	if nextOverheadCheck < realTime then
 		nextOverheadCheck = realTime + 0.5
-		
+
 		trace.start = lp.GetShootPos(lp)
 		trace.endpos = trace.start + lp.GetAimVector(lp) * 300
 		trace.filter = lp
@@ -622,17 +617,15 @@ function GM:HUDPaintBackground()
 				overheadEntCache[entTarg] = false
 			end
 
-			if alpha > 0 then
-				if not entTarg:GetNoDraw() then
-					if entTarg:IsPlayer() then
-						DrawOverheadInfo(entTarg, alpha)
-					elseif entTarg.HUDName then
-						DrawEntInfo(entTarg, alpha)
-					elseif entTarg:IsDoor() then
-						DrawDoorInfo(entTarg, alpha)
-					elseif impulse_ActiveButtons[entTarg.EntIndex(entTarg)] then
-						DrawButtonInfo(entTarg, alpha)
-					end
+			if alpha > 0 and not entTarg:GetNoDraw() then
+				if entTarg:IsPlayer() then
+					DrawOverheadInfo(entTarg, alpha)
+				elseif entTarg.HUDName then
+					DrawEntInfo(entTarg, alpha)
+				elseif entTarg:IsDoor() then
+					DrawDoorInfo(entTarg, alpha)
+				elseif impulse_ActiveButtons[entTarg.EntIndex(entTarg)] then
+					DrawButtonInfo(entTarg, alpha)
 				end
 			end
 
@@ -645,7 +638,7 @@ function GM:HUDPaintBackground()
 			overheadEntCache[entTarg] = nil
 		end
 	end
-	
+
 	if impulse.CinematicIntro and lp:Alive() then
 		local ft = FrameTime()
 		local maxTall =  ScrH() * .12
@@ -669,10 +662,10 @@ function GM:HUDPaintBackground()
 		end
 
 		surface.SetDrawColor(color_black)
-		surface.DrawRect(0, 0, ScrW(), (maxTall * letterboxFde))
-		surface.DrawRect(0, (ScrH() - (maxTall * letterboxFde)) + 1, ScrW(), maxTall)
+		surface.DrawRect(0, 0, ScrW(), maxTall * letterboxFde)
+		surface.DrawRect(0, (ScrH() - maxTall * letterboxFde) + 1, ScrW(), maxTall)
 
-		draw.DrawText(impulse.CinematicTitle, "Impulse-Elements36", ScrW() - 150, ScrH() * .905, ColorAlpha(color_white, (255 * textFde)), TEXT_ALIGN_RIGHT)
+		draw.DrawText(impulse.CinematicTitle, "Impulse-Elements36", ScrW() - 150, ScrH() * .905, ColorAlpha(color_white, 255 * textFde), TEXT_ALIGN_RIGHT)
 	else
 		letterboxFde = 0
 		textFde = 0
@@ -681,7 +674,7 @@ function GM:HUDPaintBackground()
 end
 
 concommand.Add("impulse_cameratoggle", function()
-	impulse.hudEnabled = (!impulse.hudEnabled)
+	impulse.hudEnabled = not impulse.hudEnabled
 
 	if not IsValid(impulse.chatBox.frame) then
 		return
