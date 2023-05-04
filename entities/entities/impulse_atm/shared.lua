@@ -1,4 +1,4 @@
-ENT.Base			= "base_gmodentity" 
+ENT.Base			= "base_gmodentity"
 ENT.Type			= "anim"
 ENT.PrintName		= "ATM"
 ENT.Author			= "vin, aLoneWitness"

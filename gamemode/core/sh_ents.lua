@@ -95,7 +95,7 @@ function entityMeta:CanBeCarried()
 	return true
 end
 
-local ADJUST_SOUND = SoundDuration("npc/metropolice/pain1.wav") > 0 and "" or ""
+local ADJUST_SOUND = SoundDuration("npc/metropolice/pain1.wav") > 0 and "" or "" -- what?
 
 --- Emits queued sounds on an entity one by one
 -- @realm shared

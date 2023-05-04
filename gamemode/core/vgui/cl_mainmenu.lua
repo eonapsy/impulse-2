@@ -49,11 +49,15 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound(impulse.Config.UISound.Play or "ui/buttonclick.wav")
+		if impulse.Config.UISound.Select != nil then
+			surface.PlaySound(impulse.Config.UISound.Select) -- Gives more "effect"
+		end
+
 		if impulse_isNewPlayer == true then
 			vgui.Create("impulseCharacterCreator", selfPanel)
 		elseif not impulse.MainMenu.popup then
@@ -90,11 +94,11 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound(impulse.Config.UISound.Select or "ui/buttonclick.wav")
 		vgui.Create("impulseSettings", selfPanel)
 	end
 
@@ -114,11 +118,11 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound(impulse.Config.UISound.Select or "ui/buttonclick.wav")
 		vgui.Create("impulseAchievements", selfPanel)
 	end
 
@@ -139,11 +143,11 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound(impulse.Config.UISound.Select or "ui/buttonclick.wav")
 		gui.OpenURL(impulse.Config.CommunityURL or "www.google.com")
 	end
 
@@ -164,11 +168,11 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound(impulse.Config.UISound.Select or "ui/buttonclick.wav")
 		gui.OpenURL(impulse.Config.DonateURL or "www.google.com")
 	end
 
@@ -192,7 +196,7 @@ function PANEL:Init()
 	function button:DoClick()
 		if self.popup then return end
 		if impulseCredits and IsValid(impulseCredits) then return end
-		
+
 		impulseCredits = vgui.Create("impulseCredits")
 		impulseCredits:AlphaTo(255, 2, 1.5)
 		mainmenu:AlphaTo(0, 2, 0)
@@ -223,7 +227,7 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
@@ -247,11 +251,11 @@ function PANEL:Init()
 	end
 
 	function button:OnCursorEntered()
-		surface.PlaySound("ui/buttonrollover.wav")
+		surface.PlaySound(impulse.Config.UISound.Rollover or "ui/buttonrollover.wav")
 	end
 
 	function button:DoClick()
-		surface.PlaySound("ui/buttonclick.wav")
+		surface.PlaySound(impulse.Config.UISound.Select or "ui/buttonclick.wav")
 		gui.OpenURL(impulse.Config.DiscordURL or "www.viniscool.com")
 	end
 
@@ -321,7 +325,6 @@ function PANEL:Init()
 	end)
 end
 
-local fullRemove = PANEL.Remove 
 function PANEL:Remove()
 	self:SetVisible(false)
 end

@@ -1,7 +1,6 @@
 -- replacement for spawnicon that performs a live model render, this is from NUTSCRIPT https://github.com/Chessnut/NutScript/blob/f7479a2d9cc893240093252bd89ca5813c59ea71/gamemode/core/derma/cl_spawnicon.lua
 
 local PANEL = {}
-local MODEL_ANGLE = Angle(0, 45, 0)
 
 function PANEL:Init()
 	self:SetHidden(false)

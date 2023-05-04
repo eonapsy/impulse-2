@@ -138,28 +138,6 @@ impulse.Ops.EventManager.Config.Events = {
 	        explodeEnt:Fire("explode", "", 0)
 		end
 	},
-	["explode_cinematic"] = {
-		Cat = "effect",
-		Prop = {
-			["pos"] = Vector(0, 0, 0),
-			["magnitude"] = 325,
-			["debris"] = 9
-		},
-		NeedUID = false,
-		Clientside = false,
-		Do = function(prop, uid)
-			local tempEnt = ents.Create("impulse_usable")
-			tempEnt:SetModel("models/weapons/w_c4_planted.mdl")
-			tempEnt:SetPos(prop["pos"])
-			tempEnt:Spawn()
-
-			timer.Simple(0.05, function()
-				if IsValid(tempEnt) then
-					impulse.MakeBigExplosion(tempEnt, prop["magnitude"], prop["debris"])
-				end
-			end)
-		end
-	},
 	["particleffect"] = {
 		Cat = "effect",
 		Prop = {

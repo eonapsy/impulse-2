@@ -237,6 +237,12 @@ surface.CreateFont("Impulse-Elements78", {
 	shadow = false,
 } )
 
+surface.CreateFont("Impulse-DeathText", {
+	font = impulse.Config.Fonts.Regular.Name,
+	size = 78,
+	weight = impulse.Config.Fonts.Regular.Weight,
+} )
+
 surface.CreateFont("Impulse-ChatSmall", {
 	font = impulse.Config.Fonts.Regular.Name,
 	size = impulse.IsHighRes() and 20 or 16,

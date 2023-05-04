@@ -173,6 +173,13 @@ local quickTools = {
 				LocalPlayer():ConCommand("say /iacflag "..sid)
 			end, "No, take me back!")
 		end
+	},
+	{
+		name = "Fix Legs",
+		icon = "icon16/pill.png",
+		onRun = function(ply, sid)
+			LocalPlayer():ConCommand("say /fixlegs " .. sid)
+		end
 	}
 }
 

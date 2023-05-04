@@ -112,10 +112,49 @@ function fixLegsCommand.onRun(ply, args, rawText)
 
     plyTarget:FixLegs()
     plyTarget:Notify("Your legs have been fixed by a game moderator.")
+
     ply:Notify("Fixed " .. plyTarget:Name() .. "'s legs")
 end
 
 impulse.RegisterChatCommand("/fixlegs", fixLegsCommand)
+
+local addXPCommand = {}
+addXPCommand.description = "Adds XP to the player."
+addXPCommand.adminOnly = true
+
+function addXPCommand.onRun(ply, args, rawText)
+    if #args < 2 then
+        return ply:Notify("Parameter 1 is the player name, parameter 2 is the XP to add")
+    end
+
+    local name = args[1]
+    local value = tonumber(args[2])
+
+    if not value then
+        return ply:Notify("Value is invalid! Parameter 1 is the player name, parameter 2 is the XP to add")
+    end
+
+    local plyTarget = impulse.FindPlayer(name)
+
+    if plyTarget == nil then
+        return ply:Notify("Could not find player: " .. name)
+    end
+
+    if ply == plyTarget then
+        for v,k in pairs(player.GetAll()) do
+            if k:IsLeadAdmin() then
+                k:AddChatText(Color(135, 206, 235), "[ops] Moderator " .. ply:SteamName() .. " gave theirself " .. value .. " XP")
+            end
+        end
+    end
+
+    plyTarget:AddXP(value)
+    plyTarget:Notify("You have been given " .. value .. " XP by a game moderator.")
+
+    ply:Notify("You have given " .. plyTarget:Name() .. " " .. value .. " XP.")
+end
+
+impulse.RegisterChatCommand("/addxp", addXPCommand)
 
 if GExtension then
     local banCommand = {

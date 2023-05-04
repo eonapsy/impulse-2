@@ -183,8 +183,6 @@ local function DrawEntInfo(target, alpha)
 			draw.SimpleText(hudDesc, "Impulse-HUD-OverheadDesc", 0, 55, ColorAlpha(color_white, alpha), align, TEXT_ALIGN_CENTER)
 		end
 
-		surface.DrawOutlinedRect(0, 0, textWidth, 100, 2)
-
 		imgui.End3D2D()
 	end
 end
@@ -263,13 +261,13 @@ function GM:HUDPaint()
 
 		local textCol = Color(255, 255, 255, math.ceil(fde * 255))
 
-		draw.SimpleText("You have died", "Impulse-Elements32", scrW / 2, scrH / 2, textCol, TEXT_ALIGN_CENTER)
+		draw.SimpleText("You have died", "Impulse-DeathText", scrW / 2, (scrH / 2) - 50, textCol, TEXT_ALIGN_CENTER)
 
 		local wait = math.ceil(deathWait - CurTime())
 
 		if wait > 0 then
 			draw.SimpleText("You will respawn in " .. wait .. " " .. (wait == 1 and "second" or "seconds") .. ".", "Impulse-Elements23", scrW / 2, (scrH / 2) + 30, textCol, TEXT_ALIGN_CENTER)
-			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW / 2, (scrH / 2 ) + 70, textCol, TEXT_ALIGN_CENTER)
+			draw.SimpleText("WARNING: NLR applies, you may not return to this area until 5 minutes after your death.", "Impulse-Elements18", scrW / 2, (scrH / 2 ) + 60, textCol, TEXT_ALIGN_CENTER)
 
 			draw.SimpleText("If you feel you were unfairly killed, submit a report (F3) for assistance.", "Impulse-Elements16", scrW / 2, scrH - 20, textCol, TEXT_ALIGN_CENTER)
 		end
@@ -611,8 +609,11 @@ local letterboxFde = 0
 local textFde = 0
 local holdTime
 overheadEntCache = {}
+
 -- overhead info is HEAVILY based off nutscript. I'm not taking credit for it. but it saves clients like 70 fps so its worth it
-hook.Add("PostDrawOpaqueRenderables", "ImpulseDrawOverhead", function()
+hook.Add("PostDrawTranslucentRenderables", "ImpulseDrawOverhead", function( bDepth, bSky )
+	if bSky then return end
+
 	if impulse.hudEnabled == false then
 		return
 	end
