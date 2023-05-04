@@ -8,6 +8,14 @@ the sky is the limit for what you can do.
 impulse: Reborn is a new maintained version of impulse, aiming to upgrade impulse for a better, more modern experience.
 New features such as customizable fonts are being implemented, as well as a built-in logs system which will start soon.
 
+### Credits
+vingard - The original framework, including plugins.
+urnotnick/Landis Games - Contributing to the code and making IAC 2.0
+Alex Grist - The MySQL wrapper
+Dominic Letz - The YAML module
+wyozi - The 3D2D IMGUI module
+avxsb - Contributing to the code
+
 ## Security
 Security is the backbone of impulse. Networking and client data handling has been carefully crafted to keep troublemakers at bay.
 ----  
@@ -17,3 +25,6 @@ access to the impulse Anti-Cheat 2.0, which features cross database references a
 ## Performance
 impulse has been optimized to the bit for maximum performance. Servers can expect to achieve 128 players concurrently (given proper moderation and
 a well constructed schema) without major issues.
+
+## Known issues
+- HUD Player icon is upside down after refresh
