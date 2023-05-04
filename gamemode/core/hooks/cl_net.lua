@@ -47,6 +47,14 @@ net.Receive("impulseChatNetMessage", function(len)
 	end
 end)
 
+net.Receive("impulseDermaMessage", function(len)
+	local text = net.ReadString()
+	local title = net.ReadString() or "Notice"
+	local button = net.ReadString() or "OK"
+
+	Derma_Message(text, title, button)
+end)
+
 net.Receive("impulseSendJailInfo", function()
 	local endTime = net.ReadUInt(16)
 	local hasJailData = net.ReadBool()

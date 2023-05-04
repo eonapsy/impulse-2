@@ -147,18 +147,29 @@ local function DrawEntInfo(target, alpha)
 	local hudCol = target.HUDColour or impulse.Config.InteractColour
 	local hudType = target.HUDType or "BoundingBox"
 
-	local pos = hudType == "BoundingBox" and target:LocalToWorld(target:OBBMaxs()) or target:GetPos()
-	pos.z = pos.z + 7
+	local pos
+	local align = TEXT_ALIGN_LEFT
+	if hudType == "BoundingBox" then
+		pos = target:LocalToWorld(target:OBBMaxs())
+		pos.z =  pos.z + 7
+	elseif hudType == "Original" then
+		pos = target:GetPos()
+		align = TEXT_ALIGN_CENTER
+	end
+
+	if target.HUDOffset != nil then
+		pos:Add(target.HUDOffset)
+	end
 
 	local ang = angle_zero
 	ang.y = ply:EyeAngles().y - 90
 	ang.z = 90
 
 	if imgui.Start3D2D(pos, ang, 0.1) then
-		draw.SimpleText(hudName, "Impulse-HUD-OverheadTitle", 0, 0, ColorAlpha(hudCol, alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		draw.SimpleText(hudName, "Impulse-HUD-OverheadTitle", 0, 0, ColorAlpha(hudCol, alpha), align, TEXT_ALIGN_CENTER)
 
 		if hudDesc != nil then
-			draw.SimpleText(hudDesc, "Impulse-HUD-OverheadDesc", 0, 55, ColorAlpha(color_white, alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+			draw.SimpleText(hudDesc, "Impulse-HUD-OverheadDesc", 0, 55, ColorAlpha(color_white, alpha), align, TEXT_ALIGN_CENTER)
 		end
 		imgui.End3D2D()
 	end

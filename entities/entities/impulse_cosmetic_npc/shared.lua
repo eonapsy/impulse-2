@@ -7,6 +7,8 @@ ENT.AdminOnly = true
 
 ENT.HUDName = "City Clerk"
 ENT.HUDDesc = "You can change your appearance here."
+ENT.HUDType = "Original"
+ENT.HUDOffset = Vector(0, 0, 80)
 
 function ENT:DoAnimation()
 	for k,v in ipairs(self:GetSequenceList()) do

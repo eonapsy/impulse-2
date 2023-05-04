@@ -81,3 +81,35 @@ properties.Add( "ops_openplayercardprop", {
 		impulse_infoCard:SetPlayer(ent, badges)
 	end
 } )
+
+properties.Add( "ops_getragdollplayer", {
+	MenuLabel = "[ops] Get victim info", -- Name to display on the context menu
+	Order = 5000, -- The order to display this property relative to other properties
+	MenuIcon = "icon16/shield.png", -- The icon to display next to the property
+
+	Filter = function( self, ent, ply ) -- A function that determines whether an entity is valid for this property
+		if not ply:IsAdmin() then
+			return false
+		end
+
+		return ent:IsRagdoll()
+	end,
+	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
+		if CLIENT then
+			self:MsgStart()
+			net.WriteEntity(ent)
+			self:MsgEnd()
+		end
+	end,
+
+	Receive = function(self, len, ply)
+		local ent = net.ReadEntity()
+		net.Start("impulseDermaMessage")
+		net.WriteString(ent.DPSteamID .. " (" .. ent.DPName .. ", " .. ent.DPICName .. ")")
+		net.WriteString("Victim")
+		net.WriteString("OK")
+
+		net.Send(ply)
+	end
+} )
+

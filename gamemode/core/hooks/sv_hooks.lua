@@ -595,6 +595,10 @@ function GM:DoPlayerDeath(ply, attacker, dmginfo)
 	ragdoll.Killer = attacker
 	ragdoll.DmgInfo = dmginfo
 
+	ragdoll.DPSteamID = ply:SteamID()
+	ragdoll.DPName = ply:SteamName()
+	ragdoll.DPICName = ply:Name()
+
 	if ply.LastFall and ply.LastFall > CurTime() - 0.5 then
 		ragdoll.FallDeath = true
 	end

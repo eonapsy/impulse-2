@@ -87,6 +87,7 @@ util.AddNetworkString("impulseGroupDoLeave")
 util.AddNetworkString("impulseGroupDoSetColor")
 util.AddNetworkString("impulseGroupDoSetInfo")
 util.AddNetworkString("impulseGetButtons")
+util.AddNetworkString("impulseDermaMessage")
 
 local AUTH_FAILURE = "Invalid argument (rejoin to continue)"
 
