@@ -92,7 +92,7 @@ properties.Add( "ops_getragdollplayer", {
 			return false
 		end
 
-		return ent:IsRagdoll()
+		return ent:IsRagdoll() 
 	end,
 	Action = function( self, ent ) -- The action to perform upon using the property ( Clientside )
 		if CLIENT then
@@ -104,6 +104,8 @@ properties.Add( "ops_getragdollplayer", {
 
 	Receive = function(self, len, ply)
 		local ent = net.ReadEntity()
+		if ent.DPSteamID == nil then return end
+
 		net.Start("impulseDermaMessage")
 		net.WriteString(ent.DPSteamID .. " (" .. ent.DPName .. ", " .. ent.DPICName .. ")")
 		net.WriteString("Victim")

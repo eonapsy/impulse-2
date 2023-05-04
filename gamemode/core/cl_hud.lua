@@ -45,7 +45,7 @@ local function BlurRect(x, y, w, h)
 end
 
 local vignette = Material("impulse/vignette.png")
-local vig_alpha_normal = Color(10, 10, 10, 190)
+local vig_alpha_normal = Color(10, 10, 10, 231)
 local lasthealth
 local zoneLbl
 local gradient = Material("vgui/gradient-l")
@@ -165,12 +165,26 @@ local function DrawEntInfo(target, alpha)
 	ang.y = ply:EyeAngles().y - 90
 	ang.z = 90
 
+	local color = ColorAlpha(hudCol, alpha)
+
 	if imgui.Start3D2D(pos, ang, 0.1) then
-		draw.SimpleText(hudName, "Impulse-HUD-OverheadTitle", 0, 0, ColorAlpha(hudCol, alpha), align, TEXT_ALIGN_CENTER)
+		surface.SetFont("Impulse-HUD-OverheadTitle")
+		local textWidth, _ = surface.GetTextSize(hudName)
+
+		draw.SimpleText(hudName, "Impulse-HUD-OverheadTitle", 0, 0, color, align, TEXT_ALIGN_CENTER)
 
 		if hudDesc != nil then
+			surface.SetFont("Impulse-HUD-OverheadDesc")
+			local w, _ = surface.GetTextSize(hudDesc)
+
+			if w > textWidth then
+				textWidth = w
+			end
 			draw.SimpleText(hudDesc, "Impulse-HUD-OverheadDesc", 0, 55, ColorAlpha(color_white, alpha), align, TEXT_ALIGN_CENTER)
 		end
+
+		surface.DrawOutlinedRect(0, 0, textWidth, 100, 2)
+
 		imgui.End3D2D()
 	end
 end
@@ -599,13 +613,6 @@ local holdTime
 overheadEntCache = {}
 -- overhead info is HEAVILY based off nutscript. I'm not taking credit for it. but it saves clients like 70 fps so its worth it
 hook.Add("PostDrawOpaqueRenderables", "ImpulseDrawOverhead", function()
-
-	if impulse.GetSetting("hud_vignette") == true then
-		surface.SetMaterial(vignette)
-		surface.SetDrawColor(vig_alpha_normal)
-		surface.DrawTexturedRect(0, 0, ScrW(), ScrH())
-	end
-
 	if impulse.hudEnabled == false then
 		return
 	end

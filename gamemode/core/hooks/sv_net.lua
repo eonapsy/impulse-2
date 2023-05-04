@@ -244,7 +244,7 @@ net.Receive("impulseATMDeposit", function(len, ply)
 	if ply:CanAfford(amount) then
 		ply:TakeMoney(amount)
 		ply:GiveBankMoney(amount)
-		ply:Notify("You have deposited " .. hook.Run("impulseCurrencyString", price) .. " to your bank account.")
+		ply:Notify("You have deposited " .. hook.Run("impulseCurrencyString", amount) .. " to your bank account.")
 	else
 		ply:Notify("You cannot afford to deposit this amount of money.")
 	end

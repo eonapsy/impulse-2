@@ -1,8 +1,12 @@
 ![impulse framework logo](https://raw.githubusercontent.com/LandisGames/impulse/main/logo.png)
 ----
-## Welcome to impulse
+## Welcome to impulse: Reborn
 impulse is a Garry's Mod Framework that can be tailored to nearly anything. With performance, aesthetic, and accessibility at the core of the design,
 the sky is the limit for what you can do.
+
+### Reborn
+impulse: Reborn is a new maintained version of impulse, aiming to upgrade impulse for a better, more modern experience.
+New features such as customizable fonts are being implemented, as well as a built-in logs system which will start soon.
 
 ## Security
 Security is the backbone of impulse. Networking and client data handling has been carefully crafted to keep troublemakers at bay.

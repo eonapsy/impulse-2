@@ -96,6 +96,27 @@ local dropCommand = {
 
 impulse.RegisterChatCommand("/refundmoney", dropCommand)
 
+
+local fixLegsCommand = {}
+fixLegsCommand.description = "Fixes the player's legs"
+fixLegsCommand.requiresArg = true
+fixLegsCommand.adminOnly = true
+
+function fixLegsCommand.onRun(ply, args, rawText)
+    local playerName = table.concat(args, " ")
+    local plyTarget = impulse.FindPlayer(playerName)
+
+    if plyTarget == nil or not IsValid(plyTarget) then
+        return ply:Notify("Could not find player: " .. playerName)
+    end
+
+    plyTarget:FixLegs()
+    plyTarget:Notify("Your legs have been fixed by a game moderator.")
+    ply:Notify("Fixed " .. plyTarget:Name() .. "'s legs")
+end
+
+impulse.RegisterChatCommand("/fixlegs", fixLegsCommand)
+
 if GExtension then
     local banCommand = {
         description = "Bans the specified player from the server. (time in minutes)",
@@ -132,7 +153,7 @@ if GExtension then
                     if plyTarget:IsSuperAdmin() then
                         return ply:Notify("You can not ban this user.")
                     end
-                    
+
                     plyTarget:GE_Ban(time, reason, ply:SteamID64())
                     ply:Notify("You have banned "..plyTarget:SteamName().." for "..time.." minutes.")
 
@@ -252,9 +273,8 @@ if GExtension then
                         }
                     }
                 }
-                
-                    if reqwest then
 
+                    if reqwest then
                         if embeds then
                             embeds.timestamp = os.date("%Y-%m-%dT%H:%M:%S.000Z", os.time())
                             embeds.footer = {}
