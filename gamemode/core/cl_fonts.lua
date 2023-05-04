@@ -284,4 +284,20 @@ surface.CreateFont("Impulse-SpecialFont", {
 	shadow = true
 })
 
+surface.CreateFont("Impulse-HUD-OverheadTitle", {
+	font = impulse.Config.Fonts.Regular.Name,
+	size = 78,
+	weight = impulse.Config.Fonts.Regular.Weight,
+	antialias = true,
+	shadow = false,
+} )
+
+surface.CreateFont("Impulse-HUD-OverheadDesc", {
+	font = impulse.Config.Fonts.Regular.Name,
+	size = 35,
+	weight = impulse.Config.Fonts.Regular.Weight,
+	antialias = true,
+	shadow = false,
+} )
+
 hook.Run("PostLoadFonts")

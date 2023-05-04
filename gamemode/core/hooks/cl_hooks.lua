@@ -179,7 +179,7 @@ function GM:DefineSettings()
 	impulse.DefineSetting("chat_oocenabled", { name = "OOC enabled", category = "Chatbox", type = "tickbox", default = true })
 	impulse.DefineSetting("chat_pmpings", { name = "PM and tag sound enabled", category = "Chatbox", type = "tickbox", default = true })
 
-	impulse.DefineSetting("sound_ring", { name = "Explosion Ear Ringing", category = "Performance", type = "tickbox", default = true })
+	impulse.DefineSetting("hud_type", { name = "HUD Type", category = "HUD", type = "dropdown", default = "impulse", options = { "impulse", "new" } })
 end
 
 function GM:OnDamagedByExplosion( ply, dmg )

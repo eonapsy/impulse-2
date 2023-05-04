@@ -71,6 +71,30 @@ local kickCommand = {
 
 impulse.RegisterChatCommand("/kick", kickCommand)
 
+local dropCommand = {
+    description = "Drops a specific amount of tokens, only use for refunds",
+    requiresArg = true,
+    adminOnly = true,
+    onRun = function(ply, arg, rawText)
+        local value = tonumber(arg[1])
+
+        if not value then
+            return ply:Notify("Parameter 1 must be a number.")
+        end
+
+        local trace = {}
+        trace.start = ply:EyePos()
+        trace.endpos = trace.start + ply:GetAimVector() * 85
+        trace.filter = ply
+
+        local tr = util.TraceLine(trace)
+        impulse.SpawnMoney(tr.HitPos, value, ply)
+
+        ply:Notify("Dropped")
+    end
+}
+
+impulse.RegisterChatCommand("/refundmoney", dropCommand)
 
 if GExtension then
     local banCommand = {

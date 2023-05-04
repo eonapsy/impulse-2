@@ -11,14 +11,14 @@ function ENT:Initialize()
 	self:SetUseType(SIMPLE_USE)
 	self:DrawShadow(false)
 
-    local phys = self:GetPhysicsObject()
+	local phys = self:GetPhysicsObject()
 	if (phys:IsValid()) then
 		phys:Wake()
 		phys:EnableMotion(false)
 	end
 end
 
-function ENT:OnTakeDamage(dmg) 
+function ENT:OnTakeDamage(dmg)
 	return false
 end
 
@@ -26,6 +26,8 @@ function ENT:Use(activator, caller)
 	if activator:IsPlayer() and activator:Alive() then
 		net.Start("impulseATMOpen")
 		net.Send(activator)
+
+		self:EmitSound("ambient/machines/keyboard_slow_1second.wav", 70)
 
 		activator.currentATM = self
 	end

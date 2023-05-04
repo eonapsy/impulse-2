@@ -1,7 +1,5 @@
 local PANEL = {}
 
-local newReportCol = Color(173, 255, 47)
-local claimedReportCol = Color(147, 112, 219)
 
 function PANEL:Init()
 	self:SetSize(605, 470)

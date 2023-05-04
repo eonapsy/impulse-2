@@ -140,15 +140,27 @@ local function DrawDoorInfo(target, alpha)
 end
 
 local function DrawEntInfo(target, alpha)
-	local pos = target.LocalToWorld(target, target:OBBCenter()):ToScreen()
+	local ply = LocalPlayer()
+
 	local hudName = target.HUDName
 	local hudDesc = target.HUDDesc
 	local hudCol = target.HUDColour or impulse.Config.InteractColour
+	local hudType = target.HUDType or "BoundingBox"
 
-	draw.DrawText(hudName, "Impulse-Elements19-Shadow", pos.x, pos.y, ColorAlpha(hudCol, alpha), 1)
+	local pos = hudType == "BoundingBox" and target:LocalToWorld(target:OBBMaxs()) or target:GetPos()
+	pos.z = pos.z + 7
 
-	if hudDesc then
-		draw.DrawText(hudDesc, "Impulse-Elements16-Shadow", pos.x, pos.y + 20, ColorAlpha(color_white, alpha), 1)
+	local ang = angle_zero
+	ang.y = ply:EyeAngles().y - 90
+	ang.z = 90
+
+	if imgui.Start3D2D(pos, ang, 0.1) then
+		draw.SimpleText(hudName, "Impulse-HUD-OverheadTitle", 0, 0, ColorAlpha(hudCol, alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+
+		if hudDesc != nil then
+			draw.SimpleText(hudDesc, "Impulse-HUD-OverheadDesc", 0, 55, ColorAlpha(color_white, alpha), TEXT_ALIGN_LEFT, TEXT_ALIGN_CENTER)
+		end
+		imgui.End3D2D()
 	end
 end
 
@@ -575,7 +587,7 @@ local textFde = 0
 local holdTime
 overheadEntCache = {}
 -- overhead info is HEAVILY based off nutscript. I'm not taking credit for it. but it saves clients like 70 fps so its worth it
-function GM:HUDPaintBackground()
+hook.Add("PostDrawOpaqueRenderables", "ImpulseDrawOverhead", function()
 
 	if impulse.GetSetting("hud_vignette") == true then
 		surface.SetMaterial(vignette)
@@ -671,7 +683,7 @@ function GM:HUDPaintBackground()
 		textFde = 0
 		holdTime = nil
 	end
-end
+end)
 
 concommand.Add("impulse_cameratoggle", function()
 	impulse.hudEnabled = not impulse.hudEnabled
