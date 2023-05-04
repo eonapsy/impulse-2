@@ -9,12 +9,12 @@ impulse: Reborn is a new maintained version of impulse, aiming to upgrade impuls
 New features such as customizable fonts are being implemented, as well as a built-in logs system which will start soon.
 
 ### Credits
-vingard - The original framework, including plugins.
-urnotnick/Landis Games - Contributing to the code and making IAC 2.0
-Alex Grist - The MySQL wrapper
-Dominic Letz - The YAML module
-wyozi - The 3D2D IMGUI module
-avxsb - Contributing to the code
+- vingard - The original framework, including plugins. 
+- urnotnick/Landis Games - Contributing to the code and making IAC 2.0
+- Alex Grist - The MySQL wrapper
+- Dominic Letz - The YAML module
+- wyozi - The 3D2D IMGUI module
+- avxsb - Contributing to the code
 
 ## Security
 Security is the backbone of impulse. Networking and client data handling has been carefully crafted to keep troublemakers at bay.
