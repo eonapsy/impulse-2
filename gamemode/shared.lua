@@ -148,6 +148,10 @@ function impulse.reload()
     impulse.lib.includeDir("impulse/gamemode/core")
 
 	impulse.reloadPlugins()
+	
+	if ( IsValid(PlayerIcon) ) then
+		PlayerIcon:Remove()
+	end
 
 	GM = nil
 end
